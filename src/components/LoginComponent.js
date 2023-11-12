@@ -23,19 +23,21 @@ const LoginComponent = () => {
 
         console.log('sending requests..')
 
-        const { data } = await axios.post(
-            'http://127.0.0.1:5000/api/teachers/login',
-            { phoneNumber, password },
-            config
-        )
+        navigate(`/home`, { state: { name: 'Zack' } })
 
-        const {message, name} = data
+        // const { data } = await axios.post(
+        //     'http://127.0.0.1:5000/api/teachers/login',
+        //     { phoneNumber, password },
+        //     config
+        // )
 
-        if(name) {
-            navigate(`/home`, { state: { name: name } })
-        } else if(message) {
-            setError(message)
-        }
+        // const {message, name} = data
+
+        // if(name) {
+        //     navigate(`/home`, { state: { name: name } })
+        // } else if(message) {
+        //     setError(message)
+        // }
 
         // console.log('sent request..')
         // console.log('data received', data)
