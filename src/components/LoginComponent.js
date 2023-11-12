@@ -23,13 +23,15 @@ const LoginComponent = () => {
 
         console.log('sending requests..')
 
-        const { data } = await axios.post(
-            'http://127.0.0.1:5000/api/teachers/login',
-            { phoneNumber, password },
-            config
-        )
+        // const { data } = await axios.post(
+        //     'http://127.0.0.1:5000/api/teachers/login',
+        //     { phoneNumber, password },
+        //     config
+        // )
 
-        const {message, name} = data
+        // const {message, name} = data
+
+        const name = 'this has to remove!!'
 
         if(name) {
             navigate(`/home`, { state: { name: name } })
