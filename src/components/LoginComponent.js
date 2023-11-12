@@ -33,14 +33,16 @@ const LoginComponent = () => {
 
         const name = 'this has to remove!!'
 
-        if(name) {
-            navigate(`/home`, { state: { name: name } })
-        } else if(message) {
-            setError(message)
-        }
+        navigate(`/home`, { state: { name: name } })
 
-        console.log('sent request..')
-        console.log('data received', data)
+        // if(name) {
+        //     navigate(`/home`, { state: { name: name } })
+        // } else if(message) {
+        //     setError(message)
+        // }
+
+        // console.log('sent request..')
+        // console.log('data received', data)
       
     }
 

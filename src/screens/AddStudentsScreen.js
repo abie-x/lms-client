@@ -98,7 +98,7 @@ const AddStudentsScreen = () => {
     }
 
     return (
-        <div className="px-6 py-12 h-fit w-screen bg-red-300">
+        <div className="px-6 py-12 h-fit w-screen">
             <h3 className="text-lg lg:text-2xl text-blue-500 font-semibold mt-2 mb-4 md:mt-8 md:mb-12">Add student data from below</h3>
             <div className="md:grid md:grid-cols-3 md:gap-x-4 lg:grid-cols-4 h-fit">
                 <div class="mb-6">
