@@ -99,7 +99,7 @@ const AddStudentsScreen = () => {
 
     return (
         <div className="px-6 py-12 h-fit w-screen">
-            <h3 className="text-lg lg:text-2xl text-blue-500 font-semibold mt-2 mb-4 md:mt-8 md:mb-12">Add student data from below</h3>
+            <h3 className="text-xl lg:text-2xl text-blue-500 font-semibold mt-2 mb-4 md:mt-8 md:mb-12">Add student data from below</h3>
             <div className="md:grid md:grid-cols-3 md:gap-x-4 lg:grid-cols-4 h-fit">
                 <div class="mb-6">
                     <label for="name" class="block text-sm font-medium text-gray-900 mb-2">Name</label>
@@ -158,7 +158,7 @@ const AddStudentsScreen = () => {
                 </div>
                 <div class="mb-6">
                     <label for="dob" class="block text-sm font-medium text-gray-900 mb-2">Date of Birth</label>
-                    <input datepicker value={dob} onChange={(e) => setDob(e.target.value)}  type="date" class="bg-white border border-gray-600 text-gray-900 text-sm rounded-3xl block w-full p-2.5" placeholder="Select date" />
+                    <input type="date" datepicker value={dob} onChange={(e) => setDob(e.target.value)}   class="bg-white border border-gray-600 text-gray-900 text-sm rounded-3xl block w-full p-2.5" placeholder="Select date" />
                 </div>
                 <div class="mb-6">
                     <label for="email" class="block text-sm font-medium text-gray-900 mb-2">Email</label>
