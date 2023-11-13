@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import Select from 'react-select';
 import DatePicker from "react-datepicker";
+import CDateRangePicker from '@coreui/react'
 
 const AddStudentsScreen = () => {
 
@@ -59,6 +60,8 @@ const AddStudentsScreen = () => {
     const [email, setEmail] = useState('')
     const [branch, setBranch] = useState(null)
     const [admCoordinator, setAdmCoordinator] = useState('')
+
+    const [inputType, setInputType] = useState('text')
 
     const changeIntake = (e) => {
         setIntake(e.value)
@@ -158,7 +161,7 @@ const AddStudentsScreen = () => {
                 </div>
                 <div class="mb-6">
                     <label for="dob" class="block text-sm font-medium text-gray-900 mb-2">Date of Birth</label>
-                    <input type="date" value={dob} onChange={(e) => setDob(e.target.value)}   class="bg-white border border-gray-600 text-gray-900 text-sm rounded-3xl block w-full p-2.5" placeholder="Select date" />
+                    <input type='date' value={dob}  onChange={(e) => setDob(e.target.value)}   class="bg-white border border-gray-600 text-gray-900 text-sm rounded-3xl block w-full p-2.5" placeholder="Select date" />
                 </div>
                 <div class="mb-6">
                     <label for="email" class="block text-sm font-medium text-gray-900 mb-2">Email</label>
