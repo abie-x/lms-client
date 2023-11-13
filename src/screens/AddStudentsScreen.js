@@ -158,7 +158,7 @@ const AddStudentsScreen = () => {
                 </div>
                 <div class="mb-6">
                     <label for="dob" class="block text-sm font-medium text-gray-900 mb-2">Date of Birth</label>
-                    <input type="text" datepicker value={dob} onChange={(e) => setDob(e.target.value)}   class="bg-white border border-gray-600 text-gray-900 text-sm rounded-3xl block w-full p-2.5" placeholder="Select date" />
+                    <input type="date" value={dob} onChange={(e) => setDob(e.target.value)}   class="bg-white border border-gray-600 text-gray-900 text-sm rounded-3xl block w-full p-2.5" placeholder="Select date" />
                 </div>
                 <div class="mb-6">
                     <label for="email" class="block text-sm font-medium text-gray-900 mb-2">Email</label>
