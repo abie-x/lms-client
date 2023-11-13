@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import Select from 'react-select';
-import datepicker from 'flowbite-datepicker/Datepicker';
+import datepicker from "react-datepicker";
 
 const AddStudentsScreen = () => {
 
