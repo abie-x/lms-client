@@ -1,7 +1,7 @@
 import React, {useState} from "react";
+import { batch } from "react-redux";
 import Select from 'react-select';
-import DatePicker from "react-datepicker";
-import CDateRangePicker from '@coreui/react'
+import axios from "axios";
 
 const AddStudentsScreen = () => {
 
@@ -11,8 +11,23 @@ const AddStudentsScreen = () => {
             label: 'SSLC'
         },
         {
-            value: 'PlusTwo',
-            label: 'PlusTwo'
+            value: 'Plustwo',
+            label: 'Plustwo'
+        }
+    ]
+
+    const batchOptions = [
+        {
+            value: "Science",
+            label: "Science"
+        },
+        {
+            value: "Commerce",
+            label: "Commerce"
+        },
+        {
+            value: "Humanities",
+            label: "Humanities"
         }
     ]
 
@@ -49,9 +64,35 @@ const AddStudentsScreen = () => {
         }
     ]
 
+    const yearOptions = [
+        {
+            label: 2024,
+            value: 2024
+        },
+        {
+            label: 2025,
+            value: 2025
+        },
+        {
+            label: 2026,
+            value: 2026
+        },
+        {
+            label: 2027,
+            value: 2027
+        },
+        {
+            label: 2028,
+            value: 2028
+        }
+    ]
+
+    const [error, setError] = useState(null)
+
     const [name, setName] = useState('')
     const [place, setPlace] = useState('')
     const [course, setCourse] = useState(null)
+    const [batch, setBatch] = useState(null)
     const [intake, setIntake] = useState(null)
     const [mode, setMode] = useState(null)
     const [phoneNum, setPhoneNum] = useState('')
@@ -60,8 +101,7 @@ const AddStudentsScreen = () => {
     const [email, setEmail] = useState('')
     const [branch, setBranch] = useState(null)
     const [admCoordinator, setAdmCoordinator] = useState('')
-
-    const [inputType, setInputType] = useState('text')
+    const [admYear, setAdmYear] = useState(null)
 
     const changeIntake = (e) => {
         setIntake(e.value)
@@ -72,18 +112,42 @@ const AddStudentsScreen = () => {
         setCourse(e.value)
     }
 
+    const changeBatch = (e) => {
+        setBatch(e.value)
+    }
+
     const addStudentHandler = async () => {
-        console.log(name)
-        console.log(place)
-        console.log(course)
-        console.log(intake)
-        console.log(mode)
-        console.log(phoneNum)
-        console.log(parentNum)
-        console.log(dob)
-        console.log(email)
-        console.log(branch)
-        console.log(admCoordinator)
+        const config = {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+        }
+
+        console.log('sending requests..')
+
+        const { data } = await axios.post(
+            'http://127.0.0.1:5000/api/students/nios',
+            { name, place, year: admYear, course, batch, intake, mode, phoneNumber: phoneNum, parentNumber: parentNum, dob, email, branch, admissionCoordinator: admCoordinator },
+            config
+        )
+ 
+        const {message} = data
+        message && setError(message)
+
+        // console.log(data)
+        // console.log(name)
+        // console.log(place)
+        // console.log(admYear)
+        // console.log(course)
+        // console.log(batch)
+        // console.log(intake)
+        // console.log(mode)
+        // console.log(phoneNum)
+        // console.log(parentNum)
+        // console.log(dob)
+        // console.log(email)
+        // console.log(branch)
+        // console.log(admCoordinator)
     }
 
     const deleteRecordsHandler = () => {
@@ -103,14 +167,28 @@ const AddStudentsScreen = () => {
     return (
         <div className="px-6 py-12 h-fit w-screen">
             <h3 className="text-xl lg:text-2xl text-blue-500 font-semibold mt-2 mb-4 md:mt-8 md:mb-12">Add student data from below</h3>
+
             <div className="md:grid md:grid-cols-3 md:gap-x-4 lg:grid-cols-4 h-fit">
                 <div class="mb-6">
                     <label for="name" class="block text-sm font-medium text-gray-900 mb-2">Name</label>
-                    <input type="text" id="name" value={name} class="bg-white border border-gray-600 text-gray-900 text-sm rounded-3xl block w-full p-2.5" placeholder="John doe" required onChange={(e) => setName(e.target.value)} />
+                    <input type="text" id="name" value={name} role="presentation" autoComplete="off" class="bg-white border border-gray-600 text-gray-900 text-sm rounded-3xl block w-full p-2.5" placeholder="John doe" required onChange={(e) => setName(e.target.value)} />
                 </div>
                 <div class="mb-6">
                     <label for="place" class="block text-sm font-medium text-gray-900 mb-2">Place</label>
                     <input type="text" id="place" value={place} class="bg-white border border-gray-600 text-gray-900 text-sm rounded-3xl block w-full p-2.5" placeholder="Edappal" required onChange={(e) => setPlace(e.target.value)}/>
+                </div>
+                <div class="mb-6">
+                    <label for="year" class="block text-sm font-medium text-gray-900 mb-2">Year</label>
+                    <Select options={yearOptions} styles={{
+                        control: (baseStyles, state) => ({
+                        ...baseStyles,
+                        borderColor: state.isFocused ? 'blue' : 'RGB(75, 85, 99)',
+                        borderRadius: '1.5rem',
+                        padding: '0.2rem', 
+                        borderWidth: '1px', 
+                        borderColor: 'RGB(75, 85, 99)', 
+                        backgroundColor: 'RGB(255, 255, 255)',
+                    }),}} closeMenuOnSelect={true} isSearchable={false}  onChange={(e) => setAdmYear(e.value)} controlShouldRenderValue={admYear ? true : false}/>
                 </div>
                 <div class="mb-6">
                     <label for="course" class="block text-sm font-medium text-gray-900 mb-2">Course</label>
@@ -125,6 +203,20 @@ const AddStudentsScreen = () => {
                         backgroundColor: 'RGB(255, 255, 255)',
                     }),}} closeMenuOnSelect={true} isSearchable={false} onChange={changeCourse} controlShouldRenderValue={course ? true : false}/>
                 </div>
+                {course === 'Plustwo' && (
+                    <div class="mb-6">
+                    <label for="batch" class="block text-sm font-medium text-gray-900 mb-2">Batch</label>
+                    <Select options={batchOptions} styles={{
+                        control: (baseStyles, state) => ({
+                        ...baseStyles,
+                        borderColor: state.isFocused ? 'blue' : 'RGB(75, 85, 99)',
+                        borderRadius: '1.5rem',
+                        padding: '0.2rem', 
+                        borderWidth: '1px', 
+                        borderColor: 'RGB(75, 85, 99)', 
+                        backgroundColor: 'RGB(255, 255, 255)',
+                    }),}} closeMenuOnSelect={true} isSearchable={false} onChange={changeBatch} controlShouldRenderValue={batch ? true : false}/>
+                </div>)}
                 <div class="mb-6">
                     <label for="intake" class="block text-sm font-medium text-gray-900 mb-2">Intake</label>
                     <Select options={intakeOptions} styles={{
@@ -165,7 +257,7 @@ const AddStudentsScreen = () => {
                 </div>
                 <div class="mb-6">
                     <label for="email" class="block text-sm font-medium text-gray-900 mb-2">Email</label>
-                    <input type="text" value={email} id="email" class="bg-white border border-gray-600 text-gray-900 text-sm rounded-3xl block w-full p-2.5" placeholder="admin@linfield.com" required onChange={(e) => setEmail(e.target.value)} />
+                    <input type="text" value={email} id="email" role="presentation" autoComplete="off" class="bg-white border border-gray-600 text-gray-900 text-sm rounded-3xl block w-full p-2.5" placeholder="admin@linfield.com" required onChange={(e) => setEmail(e.target.value)} />
                 </div>
                 <div class="mb-6">
                     <label for="branch" class="block text-sm font-medium text-gray-900 mb-2">Branch</label>
@@ -185,8 +277,13 @@ const AddStudentsScreen = () => {
                     <input type="text" value={admCoordinator} id="admCoordinator" class="bg-white border border-gray-600 text-gray-900 text-sm rounded-3xl block w-full p-2.5" placeholder="Nishad" required onChange={(e) => setAdmCoordinator(e.target.value)} />
                 </div> 
             </div>
-            <div className="flex justify-center md:justify-end mt-8 md:mt-0">
-                    <button type="button" class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 font-medium rounded-3xl text-sm px-4 py-4 md:px-8 md:py-3 me-2 mb-2 lg:mr-16" onClick={deleteRecordsHandler}>Delete records</button>
+
+            {error && <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100" role="alert">
+                            <span class="font-medium"></span> {error}
+            </div>}
+
+            <div className="flex justify-center md:justify-end mt-8">
+                    <button type="button" class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 font-medium rounded-3xl text-sm px-4 py-4 md:px-8 md:py-3 me-2 mb-2 lg:mr-16 transition" onClick={deleteRecordsHandler}>Delete records</button>
                     <button type="button" class="focus:outline-none text-white bg-green-500 hover:bg-green-800 focus:ring-4 font-medium rounded-3xl text-sm px-8 py-3 me-2 mb-2 lg:mr-16" onClick={addStudentHandler}>Add student</button>
             </div>
         </div>

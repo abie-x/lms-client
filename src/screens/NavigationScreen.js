@@ -9,7 +9,11 @@ const NavigationScreen = () => {
 
 
     const navigateAddStudentsScreen = () => {
-        navigate('/addstudents')
+        navigate('/addStudents')
+    }
+
+    const navigateModifyStudentsScreen = () => {
+        navigate('/modifyStudents')
     }
 
     return (
@@ -23,7 +27,7 @@ const NavigationScreen = () => {
                         <h1 className="text-lg font-semibold text-blue-400 col-span-2 mx-auto my-auto md:block md:text-center md:mt-4">Add student</h1>
                     </div>
                 </div>
-                <div class="border border-blue-400 rounded-xl p-4 mb-4 md:col-span-1 md:h-64 lg:h-80 lg:flex lg:justify-center lg:items-center cursor-pointer">
+                <div class="border border-blue-400 rounded-xl p-4 mb-4 md:col-span-1 md:h-64 lg:h-80 lg:flex lg:justify-center lg:items-center cursor-pointer" onClick={navigateModifyStudentsScreen}>
                     <div className="grid grid-cols-3 md:block">
                         <img src="./image 6.png" className="col-span-1 object-cover md:block"/>
                         <h1 className="text-lg font-semibold text-blue-400 col-span-2 mx-auto my-auto md:block md:text-center">Modify student</h1>
