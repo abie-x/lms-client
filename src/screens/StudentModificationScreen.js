@@ -60,19 +60,19 @@ const StudentModificationScreen = () => {
                 <div class="flex justify-between mt-2">
                     <div class="flex items-center me-4">
                         <input id="inline-radio" checked={stream === 'Stream1'} type="radio" value="Stream1" name="inline-radio-group" class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500" onClick={(e) => changeStream(e)} />
-                        <label for="Stream1" class="ms-2 text-lg font-semibold text-gray-700">1</label>
+                        <label for="Stream1" class="ms-2 text-md font-normal text-gray-700">One</label>
                     </div>
                     <div class="flex items-center me-4">
                         <input id="inline-2-radio" checked={stream === 'Stream2'} type="radio" value="Stream2" name="inline-radio-group" class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500" onClick={(e) => changeStream(e)}/>
-                        <label for="Stream2" class="ms-2 text-lg font-semibold text-gray-700">2</label>
+                        <label for="Stream2" class="ms-2 text-md font-normal text-gray-700">Two</label>
                     </div>
                     <div class="flex items-center me-4">
                         <input id="inline-checked-radio" checked={stream === 'Stream3'} type="radio" value="Stream3" name="inline-radio-group" class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500" onClick={(e) => changeStream(e)}/>
-                        <label for="inline-checked-radio" class="ms-2 text-lg font-semibold text-gray-700">3</label>
+                        <label for="inline-checked-radio" class="ms-2 text-md font-normal text-gray-700">Three</label>
                     </div>
                     <div class="flex items-center">
                         <input id="inline-disabled-radio" checked={stream === 'Stream4'} type="radio" value="Stream4" name="inline-radio-group" class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500" onClick={(e) => changeStream(e)} />
-                        <label for="inline-disabled-radio" class="ms-2 text-lg font-semibold text-gray-700">4</label>
+                        <label for="inline-disabled-radio" class="ms-2 text-md font-normal text-gray-700">Four</label>
                     </div>
                 </div>
             </div>
