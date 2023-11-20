@@ -28,14 +28,14 @@ const NavigationScreen = () => {
                     <div className="font-semibold">Fee</div>
                     <div className="text-xs">Update</div>
                 </button> */}
-                <div className="flex justify-center items-center md:hidden">
-                    <button type="button" class="w-16 h-16 border border-blue-300 text-blue-600 bg-slate-300 hover:bg-blue-800 focus:ring-blue-300 rounded-full p-2  text-sm">
+                <div className="flex justify-center items-center md:hidden" onClick={() => navigate('/updateFee')}>
+                    <button type="button" class="w-16 h-16 border border-blue-300 text-blue-600 bg-slate-300 rounded-full p-2  text-sm">
                         <div className="font-semibold">Fee</div>
                         <div className="text-xs">Update</div>
                     </button>
                 </div>
-                <div className="hidden md:flex justify-end items-center">
-                    <button type="button" class="flex text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-2 py-2.5 mb-2"><MdPayment className="mt-0 mr-2 h-5 w-5 md:h-5 md:w-5" /> Update fee</button>
+                <div className="hidden md:flex justify-end items-center" onClick={() => navigate('/updateFee')}>
+                    <button type="button" class="flex text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-md px-2 py-2.5 mb-2"><MdPayment className="mt-0 mr-2 h-5 w-5 md:h-5 md:w-5 lg:w-6 lg:h-6" /> Update fee</button>
                 </div>
 
 

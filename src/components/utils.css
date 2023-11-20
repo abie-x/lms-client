@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* styles.css */
+
+/* styles.css */
+
+@layer utilities {
+    .border-gradient-r-green-blue {
+      border-image: linear-gradient(to right, #00ff00, #0000ff); /* Adjust the gradient colors */
+      border-image-slice: 1;
+    }
+  
+    .border-gradient-r-blue-red {
+      border-image: linear-gradient(to right, #0000ff, #ff0000); /* Adjust the gradient colors */
+      border-image-slice: 1;
+    }
+  }
+  
+  
