@@ -123,7 +123,7 @@ const UpdateFeeStatusScreen = () => {
                     <button type="button" class="focus:outline-none text-white bg-green-500 hover:bg-red-800 focus:ring-4 font-medium rounded-md text-sm px-2 py-2 md:px-5 md:py-2.5 transition">Update fee</button>
                 </div>
             </div> 
-            <div className="hidden lg:block h-full w-full bg-red-200">
+            <div className="hidden lg:block h-full w-full bg-red-300">
                 
             </div>
         </div>
