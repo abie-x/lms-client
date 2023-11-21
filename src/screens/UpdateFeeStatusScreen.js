@@ -43,8 +43,8 @@ const UpdateFeeStatusScreen = () => {
     ]
 
     return (
-        <div className="h-screen w-screen bg-slate-100 px-6 md:px-20 py-2 lg:grid lg:grid-cols-2 ">
-            <div className="h-full w-full md:px-28 lg:px-4 xl:px-28 md:py-10 pt-4 xl:-mt-2" >
+        <div className="h-screen w-screen bg-slate-100 px-6 md:px-20 py-8 lg:grid lg:grid-cols-2">
+            <div className="h-full w-full md:px-28 lg:px-4 xl:px-28 xl:mt-2 md:py-5 bg-slate-100" >
                 <h3 className="text-base md:text-xl font-semibold">Student details</h3>
                 <div className="mt-5 text-sm flex gap-4">
                     <h4 className="text-sm md:text-lg">Name: </h4>
