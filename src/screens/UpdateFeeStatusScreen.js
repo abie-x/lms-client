@@ -44,7 +44,7 @@ const UpdateFeeStatusScreen = () => {
 
     return (
         <div className="h-fit w-screen bg-slate-100 px-6 md:px-20 py-8 lg:grid lg:grid-cols-2">
-            <div className="h-full w-full md:px-28 lg:px-4 xl:px-28 xl:mt-2 md:py-3 bg-green-100" >
+            <div className="h-full w-full md:px-28 lg:px-4 xl:px-28 xl:mt-2 md:py-3 bg-slate-100" >
                 <h3 className="text-base md:text-xl font-semibold">Student details</h3>
                 <div className="mt-5 text-sm flex gap-4">
                     <h4 className="text-sm md:text-lg">Name: </h4>
@@ -57,7 +57,7 @@ const UpdateFeeStatusScreen = () => {
                 <div className="w-full h-36 mt-6 bg-slate-200 rounded-2xl p-5">
                     <h3 className="text-sm font-semibold">Past payment status</h3>
                     <div className="grid grid-cols-5 gap-2 mt-4">
-                        <div className="w-full bg-blue-100 me-2 mb-2">
+                        <div className="w-full me-2 mb-2">
                             <button type="button" class="w-full text-green-500 border border-green-400 font-medium rounded-lg text-sm px-1 py-1">
                                 <div>Reg</div>
                                 <div>Fee</div>
@@ -76,13 +76,13 @@ const UpdateFeeStatusScreen = () => {
                             </button>
                             <label for="button" class="block text-xs font-medium text-red-600 mt-2 text-center">1000 bal</label>
                         </div>
-                        <div className="w-full bg-blue-100 me-2 mb-2">
+                        <div className="w-full me-2 mb-2">
                             <button type="button" class="w-full text-red-500 border border-red-400 font-medium rounded-lg text-sm px-1 py-1">
                                 <div>Sec</div>
                                 <div>Term</div>
                             </button>
                         </div>
-                        <div className="w-full bg-blue-100 me-2 mb-2">
+                        <div className="w-full me-2 mb-2">
                             <button type="button" class="w-full text-red-500 border border-red-400 font-medium rounded-lg text-sm px-1 py-1">
                                 <div>Third</div>
                                 <div>Term</div>
