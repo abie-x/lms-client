@@ -4,6 +4,7 @@ import Select from 'react-select';
 const UpdateFeeStatusScreen = () => {
 
     const [feeType, setFeeType] = useState(null)
+    const [paymentType, setPaymentType] = useState(null)
     const [isFocused, setIsFocused] = useState(true);
     const [amount, setAmount] = useState('')
 
@@ -27,6 +28,17 @@ const UpdateFeeStatusScreen = () => {
         {
             label: 'Third term fee',
             value: 'thirdTerm'
+        }
+    ]
+
+    const paymentOptions = [
+        {
+            label: 'Full payment',
+            value: 'fullPayment'
+        },
+        {
+            label: 'Partial payment',
+            value: 'partialPayment'
         }
     ]
 
@@ -90,15 +102,15 @@ const UpdateFeeStatusScreen = () => {
                         }),}} className="border-white" closeMenuOnSelect={true} isSearchable={false}  onChange={(e) => setFeeType(e.value)} name="feeType" controlShouldRenderValue={feeType ? true : feeType === false ? true : false}/>
                 </div>
                 <div class="mb-3 mt-6 px-3">
-                        <label for="feeType" class="block text-sm font-medium text-gray-900 mb-2">Select fee type</label>
-                        <Select options={feeOptions} styles={{
+                        <label for="paymentType" class="block text-sm font-medium text-gray-900 mb-2">Select fee type</label>
+                        <Select options={paymentOptions} styles={{
                             control: (baseStyles, state) => ({
                             ...baseStyles,
                             borderRadius: '.5rem',
                             padding: '0.2rem', 
                             borderWidth: '0px', 
                             backgroundColor: 'RGB(255, 255, 255)',
-                        }),}} className="border-white" closeMenuOnSelect={true} isSearchable={false}  onChange={(e) => setFeeType(e.value)} name="feeType" controlShouldRenderValue={feeType ? true : feeType === false ? true : false}/>
+                        }),}} className="border-white" closeMenuOnSelect={true} isSearchable={false}  onChange={(e) => setPaymentType(e.value)} name="paymentType" controlShouldRenderValue={paymentType ? true : paymentType === false ? true : false}/>
                 </div>
                 <div class="mb-3 mt-6 px-3">
                     <label for="enrollmentNumber" class="block text-sm font-medium text-gray-900 mb-2">Amount</label>
