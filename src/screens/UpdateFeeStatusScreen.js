@@ -119,7 +119,7 @@ const UpdateFeeStatusScreen = () => {
                 <div className="w-full px-3 flex justify-end">
                     <label className="text-xs md:text-sm font-medium text-gray-900 mb-2">Total fee: 3500 <span className="ml-5 text-red-500">Pending fee: 5000</span></label>
                 </div>
-                <div className="w-full flex justify-end mt-2 mb-2 bg-blue-300">
+                <div className="w-full flex justify-end mt-2 mb-1">
                     <button type="button" class="focus:outline-none text-white bg-green-500 hover:bg-red-800 focus:ring-4 font-medium rounded-md text-sm px-2 py-2 md:px-5 md:py-2.5 transition">Update fee</button>
                 </div>
             </div> 
