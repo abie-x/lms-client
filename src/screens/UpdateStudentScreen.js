@@ -1,14 +1,28 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
+import axios from "axios";
 
 const animatedComponents = makeAnimated();
 
 const UpdateStudentScreen = () => {
 
+    const [name, setName] = useState('')
+    const [phoneNumber, setPhoneNumber] = useState('')
+    const [parentNumber, setParentNumber] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [prevResult, setPrevResult] = useState('')
+    const [examCentre, setExamCentre] = useState('')
+    const [refNo, setRefNo] = useState('')
+    const [enrNo, setEnrNo] = useState('')
+
     const [status, setStatus] = useState(null)
     const [onDemandExam, setOnDemandExam] = useState(null)
     const [onDEmandExamMonth, setOnDEmandExamMonth] = useState(null)
+    const [subjects, setSubjects] = useState(null)
+    const [onDemandSubjects, setOnDemandSubjects] = useState(null)
+    const [toc, setToc] = useState(null)
 
     const statusOptions = [
         {
@@ -114,6 +128,24 @@ const UpdateStudentScreen = () => {
         }
     ]
 
+
+    useEffect(() => {
+        const fetchStudentDetails = async () => {
+            const { data, message } = await axios.get(
+                `http://127.0.0.1:5000/api/students/details?phoneNumber=9745759884`
+            )
+
+            if(data) {
+                setName(data.name)
+                setPhoneNumber(data.phoneNumber)
+                setParentNumber(data.parentNumber)
+                setEmail(data.email)
+            }
+        }
+
+        fetchStudentDetails()
+    }, [])
+
     return (
         <div className="px-6 py-12 h-fit w-screen">
             <h3 className="text-xl lg:text-2xl text-blue-500 font-semibold mt-2 mb-4 md:mt-8 md:mb-12">Add student data from below</h3>
@@ -121,39 +153,39 @@ const UpdateStudentScreen = () => {
             <div className="md:grid md:grid-cols-3 md:gap-x-4 lg:grid-cols-4 h-fit">
                 <div class="mb-6">
                         <label for="name" class="block text-sm font-medium text-gray-900 mb-2">Name</label>
-                        <input type="text" id="name" value={'testing'} role="presentation" autoComplete="off" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="John doe" required />
+                        <input type="text" id="name" value={name} role="presentation" autoComplete="off" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="John doe" onChange={(e) => setName(e.target.value)} required />
                     </div>
                     <div class="mb-6">
                         <label for="phoneNumber" class="block text-sm font-medium text-gray-900 mb-2">Phone number</label>
-                        <input type="text" id="place" value={'testing'} role="presentation" autoComplete="off" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="John doe" required />
+                        <input type="text" id="place" value={phoneNumber} role="presentation" autoComplete="off" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="John doe" onChange={(e) => setPhoneNumber(e.target.value)} required />
                     </div>
                     <div class="mb-6">
                         <label for="parentNumber" class="block text-sm font-medium text-gray-900 mb-2">Parent number</label>
-                        <input type="text" id="name" value={'testing'} role="presentation" autoComplete="off" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="John doe" required />
+                        <input type="text" id="name" value={parentNumber} role="presentation" autoComplete="off" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="John doe" onChange={(e) => setParentNumber(e.target.value)} required />
                     </div>
                     <div class="mb-6">
                         <label for="email" class="block text-sm font-medium text-gray-900 mb-2">email</label>
-                        <input type="text" id="email" value={'testing'} role="presentation" autoComplete="off" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="John doe" required />
+                        <input type="text" id="email" value={email} role="presentation" autoComplete="off" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="John doe" onChange={(e) => setEmail(e.target.value)} required />
                     </div>
                     <div class="mb-6">
                         <label for="password" class="block text-sm font-medium text-gray-900 mb-2">password</label>
-                        <input type="text" id="password" value={'testing'} role="presentation" autoComplete="off" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="John doe" required />
+                        <input type="text" id="password" role="presentation" autoComplete="off" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="********" onChange={(e) => setPassword(e.target.value)} required />
                     </div>
                     <div class="mb-6">
                         <label for="result" class="block text-sm font-medium text-gray-900 mb-2">Previous result</label>
-                        <input type="text" id="result" role="presentation" autoComplete="off" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="www.nios.com/results?" required />
+                        <input type="text" id="result" role="presentation" autoComplete="off" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="www.nios.com/results?" onChange={(e) => setPrevResult(e.target.value)} required />
                     </div>
                     <div class="mb-6">
                         <label for="examCentre" class="block text-sm font-medium text-gray-900 mb-2">Exam centre</label>
-                        <input type="text" id="examCentre" role="presentation" autoComplete="off" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="Edappal" required />
+                        <input type="text" id="examCentre" role="presentation" autoComplete="off" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="Edappal" onChange={(e) => setExamCentre(e.target.value)} required />
                     </div>
                     <div class="mb-6">
                         <label for="refNo" class="block text-sm font-medium text-gray-900 mb-2">Reference no</label>
-                        <input type="text" id="refNo" role="presentation" autoComplete="off" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="ACXX789K" required />
+                        <input type="text" id="refNo" role="presentation" autoComplete="off" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="ACXX789K" onChange={(e) => setRefNo(e.target.value)} required />
                     </div>
                     <div class="mb-6">
                         <label for="enrNo" class="block text-sm font-medium text-gray-900 mb-2">Enrollment no</label>
-                        <input type="text" id="enrNo" role="presentation" autoComplete="off" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="ACXX789K" required />
+                        <input type="text" id="enrNo" role="presentation" autoComplete="off" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="ACXX789K" onChange={(e) => setEnrNo(e.target.value)} required />
                     </div>
                     <div class="mb-6">
                         <label for="status" class="block text-sm font-medium text-gray-900 mb-2">Status</label>
@@ -194,7 +226,7 @@ const UpdateStudentScreen = () => {
                                 backgroundColor: 'RGB(255, 255, 255)',
                         }),}} closeMenuOnSelect={true} isSearchable={false}  onChange={(e) => setOnDEmandExamMonth(e.value)} controlShouldRenderValue={onDEmandExamMonth ? true : false}/>
                     </div>
-                    <div class={`mb-6 ${onDemandExam ? 'block' : 'hidden'}`}>
+                    {/* <div class={`mb-6 ${onDemandExam ? 'block' : 'hidden'}`}>
                         <label for="onDemandExamMonth" class="block text-sm font-medium text-gray-900 mb-2">On demand exam month</label>
                         <Select options={onDemandExamMonthOptions} styles={{
                             control: (baseStyles, state) => ({
@@ -206,9 +238,9 @@ const UpdateStudentScreen = () => {
                                 borderColor: 'RGB(156 163 175)', 
                                 backgroundColor: 'RGB(255, 255, 255)',
                         }),}} closeMenuOnSelect={true} isSearchable={false}  onChange={(e) => setOnDEmandExamMonth(e.value)} controlShouldRenderValue={onDEmandExamMonth ? true : false}/>
-                    </div>
-                    <div class="mb-6">
-                        <label for="result" class="block text-sm font-medium text-gray-900 mb-2">OnDemand subjects</label>
+                    </div> */}
+                    <div class={`mb-6 ${!onDemandExam ? 'hidden' : 'block'}`}>
+                        <label for="onDemandExamSubjects" class="block text-sm font-medium text-gray-900 mb-2">OnDemand subjects</label>
                         <Select options={onDemandSubjectsOptions} styles={{
                             control: (baseStyles, state) => ({
                                 ...baseStyles,
@@ -218,9 +250,39 @@ const UpdateStudentScreen = () => {
                                 borderWidth: '1px', 
                                 borderColor: 'RGB(156 163 175)', 
                                 backgroundColor: 'RGB(255, 255, 255)',
-                        }),}} closeMenuOnSelect={false}  components={animatedComponents} isMulti  onChange={(selectedOptions) => console.log(selectedOptions)} onBlur={() => console.log('Blur')} onFocus={() => console.log('Focus')}/>
+                        }),}} closeMenuOnSelect={false}  components={animatedComponents} isMulti  onChange={(selectedOptions) => setOnDemandSubjects(selectedOptions)} onBlur={() => console.log('Blur')} onFocus={() => console.log('Focus')}/>
+                    </div>
+                    <div class={`mb-6`}>
+                        <label for="subjects" class="block text-sm font-medium text-gray-900 mb-2">Subjects</label>
+                        <Select options={onDemandSubjectsOptions} styles={{
+                            control: (baseStyles, state) => ({
+                                ...baseStyles,
+                                borderColor: state.isFocused ? 'blue' : 'RGB(75, 85, 99)',
+                                borderRadius: '12px',
+                                padding: '0.05rem', 
+                                borderWidth: '1px', 
+                                borderColor: 'RGB(156 163 175)', 
+                                backgroundColor: 'RGB(255, 255, 255)',
+                        }),}} closeMenuOnSelect={false}  components={animatedComponents} isMulti  onChange={(selectedOptions) => setSubjects(selectedOptions)} onBlur={() => console.log('Blur')} onFocus={() => console.log('Focus')}/>
+                    </div>
+                    <div class={`mb-6`}>
+                        <label for="toc" class="block text-sm font-medium text-gray-900 mb-2">TOC</label>
+                        <Select options={onDemandSubjectsOptions} styles={{
+                            control: (baseStyles, state) => ({
+                                ...baseStyles,
+                                borderColor: state.isFocused ? 'blue' : 'RGB(75, 85, 99)',
+                                borderRadius: '12px',
+                                padding: '0.05rem', 
+                                borderWidth: '1px', 
+                                borderColor: 'RGB(156 163 175)', 
+                                backgroundColor: 'RGB(255, 255, 255)',
+                        }),}} closeMenuOnSelect={false}  components={animatedComponents} isMulti  onChange={(selectedOptions) => setToc(selectedOptions)} onBlur={() => console.log('Blur')} onFocus={() => console.log('Focus')}/>
+                    </div>
                 </div>
-                </div>
+                <div className="flex justify-center md:justify-end mt-8">
+                    <button type="button" class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 font-medium rounded-3xl text-sm px-4 py-4 md:px-8 md:py-3 me-2 mb-2 lg:mr-16 transition">Delete records</button>
+                    <button type="button" class="focus:outline-none text-white bg-green-500 hover:bg-green-800 focus:ring-4 font-medium rounded-3xl text-sm px-8 py-3 me-2 mb-2 lg:mr-16">Add student</button>
+            </div>
         </div>
     )
 }
