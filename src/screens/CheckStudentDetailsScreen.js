@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import axios from "axios";
+import {useNavigate} from 'react-router-dom'
 
 const CheckStudentDetailsScreen = () => {
 
@@ -77,6 +78,13 @@ const CheckStudentDetailsScreen = () => {
     }
 
     const CardComponent = () => {
+
+        const navigate = useNavigate()
+
+        const updateHandler = () => {
+            navigate('/updateStudent')
+        }
+
         return(
             <div class="max-w-sm p-6 bg-slate-100 rounded-lg shadow mt-12">
                 <div className="grid grid-cols-1 border border-gray-800 px-6 py-6 rounded-md">
@@ -99,7 +107,7 @@ const CheckStudentDetailsScreen = () => {
                     <h4 className="mt-12 text-xs text-gray-400">If you are seeing details of another student, click edit number</h4>
                     <div className="flex justify-center mt-8">
                         <button type="button" class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 font-medium rounded-3xl text-sm w-32 h-8 px-4  me-2 mb-2 transition">Edit</button>
-                        <button type="button" class="focus:outline-none text-white bg-green-500 hover:bg-green-800 focus:ring-4 font-medium rounded-3xl text-sm w-32 h-8 px-4 me-2 mb-2" onClick={updateStudentHandler}>Update</button>
+                        <button type="button" class="focus:outline-none text-white bg-green-500 hover:bg-green-800 focus:ring-4 font-medium rounded-3xl text-sm w-32 h-8 px-4 me-2 mb-2" onClick={updateHandler}>Update</button>
                     </div>
                 </div>
             </div>
