@@ -197,7 +197,7 @@ const UpdateStudentScreen = () => {
           };
 
         const { data } = await axios.put(
-            'https://jellyfish-app-wmpnc.ondigitalocean.app/api/students/655de6d6858a052f4b0c5ceb',
+            `https://jellyfish-app-wmpnc.ondigitalocean.app/api/students/${id}`,
             requestBody,
             config
         )
