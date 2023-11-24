@@ -11,6 +11,8 @@ const UpdateStudentScreen = () => {
     const { state } = useLocation();
     const { id } = state 
 
+    const navigate = useNavigate()
+
     const [name, setName] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
     const [parentNumber, setParentNumber] = useState('')
@@ -199,6 +201,10 @@ const UpdateStudentScreen = () => {
             requestBody,
             config
         )
+
+        if(data.name) {
+            navigate('/home')
+        }
 
         console.log('got data!!', data)
     }

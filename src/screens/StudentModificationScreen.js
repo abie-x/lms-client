@@ -1,8 +1,11 @@
 import React, {useState} from "react";
 import Select from 'react-select';
 import axios from "axios";
+import {useNavigate} from 'react-router-dom'
 
 const StudentModificationScreen = () => {
+
+    const navigate = useNavigate()
 
     const [stream, setStream] = useState(null)
     const [existingStudent, setExistingStudent] = useState(null)
@@ -110,6 +113,10 @@ const StudentModificationScreen = () => {
             requestBody,
             config
         )
+
+        if(data.name) {
+            navigate('/home')
+        }
 
         console.log('got data!!', data)
 
