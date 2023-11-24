@@ -1,15 +1,20 @@
 import React, {useState} from "react";
 import axios from "axios";
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, useSearchParams} from 'react-router-dom'
 
 const CheckStudentDetailsScreen = () => {
 
     // const [phoneNumber, setPhoneNumber]  = useState('')
-    const [name, setName] = useState('')
-    const [course, setCourse] = useState('')
-    const [batch, setBatch] = useState('')
-    const [year, setYear] = useState('')
+    const [name, setName] = useState(null)
+    const [course, setCourse] = useState(null)
+    const [batch, setBatch] = useState(null)
+    const [year, setYear] = useState(null)
+    const [studentId, setStudentId] = useState(null)
     const [error, setError] = useState(null)
+    const [subjects, setSubjects] = useState(null)
+
+    const [searchParams, setSearchParams] = useSearchParams()
+    const redirect = searchParams.get('redirect')
 
 
     const editNumberHandler = () => {
@@ -21,6 +26,7 @@ const CheckStudentDetailsScreen = () => {
         console.log(course)
         console.log(batch)
         console.log(year)
+        console.log(redirect && redirect)
     }
 
     const SearchComponent = () => {
@@ -47,7 +53,7 @@ const CheckStudentDetailsScreen = () => {
             console.log('sending requests..')
 
             const { data, message } = await axios.get(
-                `http://127.0.0.1:5000/api/students/details?phoneNumber=${phoneNumber}`,
+                `https://jellyfish-app-wmpnc.ondigitalocean.app/api/students/details?phoneNumber=${phoneNumber}`,
                 config
             )
 
@@ -56,6 +62,8 @@ const CheckStudentDetailsScreen = () => {
                 setCourse(data.course)
                 setBatch(data.batch)
                 setYear(data.year)
+                setStudentId(data._id)
+                setSubjects(data.subjects)
             }
     
         }
@@ -82,7 +90,20 @@ const CheckStudentDetailsScreen = () => {
         const navigate = useNavigate()
 
         const updateHandler = () => {
-            navigate('/updateStudent')
+            if(redirect === 'updateFee') {
+                navigate('/updateFee', { state: { id:  studentId} })
+            }
+            else if(!name) {
+                setError(`Student doesn't exist in this phone number`)
+            } else {
+                if(subjects.length > 0) {
+                    navigate(`/modifyStudent`, { state: { id:  studentId} })
+                } else {
+                    navigate(`/updateStudent`, { state: { id:  studentId} })
+                }
+            }
+            
+            // navigate('/updateStudent')
         }
 
         return(
@@ -120,6 +141,9 @@ const CheckStudentDetailsScreen = () => {
                 <h2 className="text-lg md:text-xl lg:text-3xl font-semibold text-blue-500 mb-2">Enter Student Phone number</h2>
                 <h4 className="text-sm md:text-md lg:text-lg font-semibold text-gray-400">& check if details are correct</h4>
                 <SearchComponent />
+                {error && <div class="p-4 text-sm text-red-800 rounded-lg bg-red-100 mt-4" role="alert">
+                            <span class="font-medium"></span> {error}
+                </div>}
                 <CardComponent />
             </div>
             <div className=" max-[640px]:hidden mt-24 lg:-mt-0 md:w-full lg:w-5/6">

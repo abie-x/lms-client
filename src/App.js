@@ -17,8 +17,8 @@ function App() {
         <Route path="/home" element={<NavigationScreen />} />
         <Route path="/addStudents" element={<AddStudentsScreen />} />
         {/* <Route path="/modifyStudents" element={<AddStudentsScreenModified /> } /> */}
-        <Route path="/modifyStudents" element={<CheckStudentDetailsScreen /> } />
-        {/* <Route path="/checkStudent" element={<CheckStudentDetailsScreen />} /> */}
+        <Route path="/checkStudent" element={<CheckStudentDetailsScreen /> } />
+        <Route path="/modifyStudent" element={<StudentModificationScreen />} />
         <Route path="/updateFee" element={<UpdateFeeStatusScreen />} />
         <Route path="/updateStudent" element={<UpdateStudentScreen />} />
       </Routes>

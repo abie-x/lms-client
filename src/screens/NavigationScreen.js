@@ -14,7 +14,7 @@ const NavigationScreen = () => {
     }
 
     const navigateModifyStudentsScreen = () => {
-        navigate('/modifyStudents')
+        navigate('/checkStudent')
     }
 
     return (
@@ -28,7 +28,7 @@ const NavigationScreen = () => {
                     <div className="font-semibold">Fee</div>
                     <div className="text-xs">Update</div>
                 </button> */}
-                <div className="flex justify-center items-center md:hidden" onClick={() => navigate('/updateFee')}>
+                <div className="flex justify-center items-center md:hidden" onClick={() => navigate('/checkStudent?redirect=updateFee')}>
                     <button type="button" class="w-16 h-16 border border-blue-300 text-blue-600 bg-slate-300 rounded-full p-2  text-sm">
                         <div className="font-semibold">Fee</div>
                         <div className="text-xs">Update</div>

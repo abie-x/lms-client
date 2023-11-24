@@ -1,13 +1,17 @@
 import React, {useState} from "react";
 import Select from 'react-select';
+import axios from "axios";
 
 const StudentModificationScreen = () => {
 
     const [stream, setStream] = useState(null)
     const [existingStudent, setExistingStudent] = useState(null)
     const [examMode, setExamMode] = useState(null)
-    const [enrollmentNumber, setEnrollmentNumber] = useState('')
-    const [lastExamYear, setLastExamYear] = useState('')
+    const [enrollmentNumber, setEnrollmentNumber] = useState(null)
+    const [examCentre, setExamCentre] = useState(null)
+    const [examMonth, setExamMonth] = useState(null)
+    const [onDemandExamMonth, setOnDEmandExamMonth] = useState(null)
+    const [lastExamYear, setLastExamYear] = useState(null)
 
     const existingStudentOptions = [
         {
@@ -31,12 +35,84 @@ const StudentModificationScreen = () => {
         }
     ]
 
+    const examMonthOptions = [
+        {
+            label: 'January',
+            value: 'January'
+        },
+        {
+            label: 'February',
+            value: 'February'
+        },
+        {
+            label: 'March',
+            value: 'March'
+        },
+        {
+            label: 'April',
+            value: 'April'
+        },
+        {
+            label: 'May',
+            value: 'May'
+        },
+        {
+            label: 'June',
+            value: 'June'
+        },
+        {
+            label: 'July',
+            value: 'July'
+        },
+        {
+            label: 'August',
+            value: 'August'
+        },
+        {
+            label: 'September',
+            value: 'September'
+        },
+        {
+            label: 'October',
+            value: 'October'
+        },
+        {
+            label: 'November',
+            value: 'November'
+        },
+        {
+            label: 'December',
+            value: 'December'
+        }
+    ]
+
     const updateStudentHandler = async () => {
-        console.log(stream)
-        console.log(existingStudent)
-        console.log(examMode)
-        console.log(enrollmentNumber)
-        console.log(lastExamYear)
+
+        console.log('sending requests...')
+
+        const config = {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+        }
+
+        const requestBody = {
+            ...(stream !== null && { registrationStream: stream }),
+            ...(examMode !== null && examMode === 'Ondemand exam' && { onDemandExam: true }),
+            ...(examMode !== null && examMode === 'Normal exam' && { onDemandExam: false }),
+            ...(examMonth !== null && { examMonth }),
+            ...(enrollmentNumber !== null && { enrollmentNumber }),
+            ...(lastExamYear !== null && { lastExamYear }),
+        }
+
+        const { data } = await axios.put(
+            'https://jellyfish-app-wmpnc.ondigitalocean.app/api/students/655de6d6858a052f4b0c5ceb',
+            requestBody,
+            config
+        )
+
+        console.log('got data!!', data)
+
     }
 
     const deleteRecordsHandler = () => {
@@ -87,43 +163,61 @@ const StudentModificationScreen = () => {
             <div className="md:grid md:grid-cols-3 md:gap-x-4 lg:grid-cols-4 h-fit">
                 <RadioComponent />
                 <div class="mb-6">
-                        <label for="existingStudent" class="block text-sm font-medium text-gray-900 mb-2">Existing student</label>
-                        <Select options={existingStudentOptions} styles={{
-                            control: (baseStyles, state) => ({
-                            ...baseStyles,
-                            borderColor: state.isFocused ? 'blue' : 'RGB(75, 85, 99)',
-                            borderRadius: '1.5rem',
-                            padding: '0.2rem', 
-                            borderWidth: '1px', 
-                            borderColor: 'RGB(75, 85, 99)', 
-                            backgroundColor: 'RGB(255, 255, 255)',
-                        }),}} closeMenuOnSelect={true} isSearchable={false}  onChange={(e) => setExistingStudent(e.value)} controlShouldRenderValue={existingStudent === true ? true : existingStudent === false ? true : false}/>
+                    <label for="enrollmentNumber" class="block text-sm font-medium text-gray-900 mb-2">Enrollment number</label>
+                    <input type="text" id="enrollmentNumber" value={enrollmentNumber} class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="CDJ1233J" required onChange={(e) => setEnrollmentNumber(e.target.value)}/>
                 </div>
                 <div class="mb-6">
                         <label for="examMode" class="block text-sm font-medium text-gray-900 mb-2">Exam mode</label>
                         <Select options={examModeOptions} styles={{
                             control: (baseStyles, state) => ({
-                            ...baseStyles,
-                            borderColor: state.isFocused ? 'blue' : 'RGB(75, 85, 99)',
-                            borderRadius: '1.5rem',
-                            padding: '0.2rem', 
-                            borderWidth: '1px', 
-                            borderColor: 'RGB(75, 85, 99)', 
-                            backgroundColor: 'RGB(255, 255, 255)',
+                                ...baseStyles,
+                                borderColor: state.isFocused ? 'blue' : 'RGB(75, 85, 99)',
+                                borderRadius: '12px',
+                                padding: '0.05rem', 
+                                borderWidth: '1px', 
+                                borderColor: 'RGB(156 163 175)', 
+                                backgroundColor: 'RGB(255, 255, 255)',
+                                fontSize: "14px"
                         }),}} closeMenuOnSelect={true} isSearchable={false}  onChange={(e) => setExamMode(e.value)} controlShouldRenderValue={examMode ? true : false}/>
                 </div>
+                <div class={`mb-6 ${examMode === 'Ondemand exam' || null ? 'block' : 'hidden'}`}>
+                        <label for="onDemandExamMonth" class="block text-sm font-medium text-gray-900 mb-2">On demand exam month</label>
+                        <Select options={examMonthOptions} styles={{
+                            control: (baseStyles, state) => ({
+                                ...baseStyles,
+                                borderColor: state.isFocused ? 'blue' : 'RGB(75, 85, 99)',
+                                borderRadius: '12px',
+                                padding: '0.05rem', 
+                                borderWidth: '1px', 
+                                borderColor: 'RGB(156 163 175)', 
+                                backgroundColor: 'RGB(255, 255, 255)',
+                        }),}} closeMenuOnSelect={true} isSearchable={false}  onChange={(e) => setOnDEmandExamMonth(e.value)} controlShouldRenderValue={onDemandExamMonth ? true : false}/>
+                    </div>
+                    <div class={`mb-6 ${examMode === 'Normal exam' || null ? 'block' : 'hidden'}`}>
+                        <label for="normalExamMonth" class="block text-sm font-medium text-gray-900 mb-2">Normal exam month</label>
+                        <Select options={examMonthOptions} styles={{
+                            control: (baseStyles, state) => ({
+                                ...baseStyles,
+                                borderColor: state.isFocused ? 'blue' : 'RGB(75, 85, 99)',
+                                borderRadius: '12px',
+                                padding: '0.05rem', 
+                                borderWidth: '1px', 
+                                borderColor: 'RGB(156 163 175)', 
+                                backgroundColor: 'RGB(255, 255, 255)',
+                        }),}} closeMenuOnSelect={true} isSearchable={false}  onChange={(e) => setExamMonth(e.value)} controlShouldRenderValue={examMonth ? true : false}/>
+                    </div>
                 <div class="mb-6">
-                    <label for="enrollmentNumber" class="block text-sm font-medium text-gray-900 mb-2">Enrollment number</label>
-                    <input type="text" id="enrollmentNumber" value={enrollmentNumber} class="bg-white border border-gray-600 text-gray-900 text-sm rounded-3xl block w-full p-2.5" placeholder="CDJ1233J" required onChange={(e) => setEnrollmentNumber(e.target.value)}/>
+                    <label for="examCentre" class="block text-sm font-medium text-gray-900 mb-2">Exam centre</label>
+                    <input type="text" id="enrollmentNumber" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="CDJ1233J" required onChange={(e) => setExamCentre(e.target.value)}/>
                 </div>
                 <div class="mb-6">
                     <label for="lastExamYear" class="block text-sm font-medium text-gray-900 mb-2">Year of Last Exam</label>
-                    <input type="text" id="lastYearExam" value={lastExamYear} class="bg-white border border-gray-600 text-gray-900 text-sm rounded-3xl block w-full p-2.5" placeholder="2019" required onChange={(e) => setLastExamYear(e.target.value)}/>
+                    <input type="text" id="lastYearExam" value={lastExamYear} class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="2019" required onChange={(e) => setLastExamYear(e.target.value)}/>
                 </div>
-                <div className="flex justify-center md:justify-end mt-8">
+            </div>
+            <div className="flex justify-center md:justify-end mt-8">
                     <button type="button" class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 font-medium rounded-3xl text-sm px-4 py-4 md:px-8 md:py-3 me-2 mb-2 lg:mr-16 transition" onClick={deleteRecordsHandler}>Delete records</button>
                     <button type="button" class="focus:outline-none text-white bg-green-500 hover:bg-green-800 focus:ring-4 font-medium rounded-3xl text-sm px-8 py-3 me-2 mb-2 lg:mr-16" onClick={updateStudentHandler}>Update</button>
-                </div>
             </div>
 
             {console.log(`the current selected stream is: ${stream}`)}

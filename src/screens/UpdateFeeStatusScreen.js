@@ -1,8 +1,14 @@
 import React, {useState, useEffect} from "react";
 import Select from 'react-select';
 import axios from "axios";
+import {useLocation, useNavigate} from 'react-router-dom'
 
 const UpdateFeeStatusScreen = () => {
+
+    const navigate = useNavigate()
+
+    const { state } = useLocation();
+    const { id } = state ;
 
     const [feeType, setFeeType] = useState(null)
     const [paymentType, setPaymentType] = useState(null)
@@ -49,7 +55,7 @@ const UpdateFeeStatusScreen = () => {
     //getting the student details
     useEffect(() => {
         const getStudentData = async () => {
-            const {data} = await axios.get('http://localhost:5000/api/students/details?phoneNumber=9745759884')
+            const {data} = await axios.get(`https://jellyfish-app-wmpnc.ondigitalocean.app/api/students/${id}`)
             console.log('sending data...')
             console.log(data)
             if(data) {
@@ -78,18 +84,24 @@ const UpdateFeeStatusScreen = () => {
         } else if(feeType === 'thirdTerm') {
             installmentNumber = 3
         } else {
-            console.log('something went wrong!')
             installmentNumber = 4
         }
 
         const { data } = await axios.put(
-            'http://127.0.0.1:5000/api/students/fees/nios',
-            { phoneNumber: '9745759884', feeType, installmentNumber, amount: parseInt(amount) },
+            'https://jellyfish-app-wmpnc.ondigitalocean.app/api/students/fees/nios',
+            { phoneNumber: student.phoneNumber, feeType, installmentNumber, amount: parseInt(amount) },
             config
         )
 
-        console.log('iam receiving requests')
-        console.log(data)
+        if(data.status === 'success') {
+            navigate('/home')
+        } else {
+            console.log(data.message)
+        }
+
+        // if(data.name) {
+        //     navigate('/home')
+        // }
     }
 
     return (
@@ -174,6 +186,7 @@ const UpdateFeeStatusScreen = () => {
                 <div className="w-full flex justify-end mt-2 mb-1">
                     <button type="button" class="focus:outline-none text-white bg-green-500 hover:bg-red-800 focus:ring-4 font-medium rounded-md text-sm px-2 py-2 md:px-5 md:py-2.5 transition" onClick={updateFeeHandler}>Update fee</button>
                 </div>
+                {console.log('id', id)}
             </div> 
             <div className="hidden lg:block h-full w-full bg-red-300">
                 

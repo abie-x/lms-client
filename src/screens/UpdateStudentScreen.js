@@ -1,11 +1,15 @@
 import React, {useState, useEffect} from "react";
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
+import {useLocation, useNavigate} from 'react-router-dom'
 import axios from "axios";
 
 const animatedComponents = makeAnimated();
 
 const UpdateStudentScreen = () => {
+
+    const { state } = useLocation();
+    const { id } = state 
 
     const [name, setName] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
@@ -19,10 +23,11 @@ const UpdateStudentScreen = () => {
 
     const [status, setStatus] = useState(null)
     const [onDemandExam, setOnDemandExam] = useState(null)
-    const [onDEmandExamMonth, setOnDEmandExamMonth] = useState(null)
+    const [onDemandExamMonth, setOnDemandExamMonth] = useState(null)
     const [subjects, setSubjects] = useState(null)
     const [onDemandSubjects, setOnDemandSubjects] = useState(null)
     const [toc, setToc] = useState(null)
+    const [tocSubjects, setTocSubjects] = useState(null)
 
     const statusOptions = [
         {
@@ -132,7 +137,7 @@ const UpdateStudentScreen = () => {
     useEffect(() => {
         const fetchStudentDetails = async () => {
             const { data, message } = await axios.get(
-                `http://127.0.0.1:5000/api/students/details?phoneNumber=9745759884`
+                `https://jellyfish-app-wmpnc.ondigitalocean.app/api/students/${id}`
             )
 
             if(data) {
@@ -145,6 +150,58 @@ const UpdateStudentScreen = () => {
 
         fetchStudentDetails()
     }, [])
+
+    const valuesOnlyArraySubjects = (e) => {
+        const newSubjects = e.map(obj => obj.value);
+        setSubjects(newSubjects)
+        
+    }
+
+    const valuesOnlyArrayOnDemandSubjects = (e) => {
+        const newOnDemandSubjects = e.map(obj => obj.value)
+        setOnDemandSubjects(newOnDemandSubjects)
+    }
+
+    const valuesOnlyArrayTocSubjects = (e) => {
+        const newToc = e.map(obj => obj.value)
+        setTocSubjects(newToc)
+    }
+
+    const updateStudentHandler = async () => {
+        console.log('iam sending requests')
+        const config = {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+        }
+
+        const requestBody = {
+            ...(name !== null && { name }),
+            ...(phoneNumber !== null && { phoneNumber }),
+            ...(parentNumber !== null && { parentNumber }),
+            ...(email !== null && { email }),
+            ...(password !== null && { password }),
+            ...(prevResult !== null && { results: prevResult }),
+            ...(examCentre !== null && { examCentre }),
+            ...(refNo !== null && { referenceNumber: refNo }),
+            ...(enrNo !== null && { enrollmentNumber: enrNo }),
+            ...(status !== null && { status }),
+            ...(onDemandExam !== null && { onDemandExam }),
+            ...(onDemandExamMonth !== null && { onDemandExamMonth }),
+            ...(subjects !== null && { subjects }),
+            ...(onDemandSubjects !== null && { onDemandSubjects }),
+            ...(toc !== null && { toc }),
+            ...(tocSubjects !== null && { tocSubjects }),
+          };
+
+        const { data } = await axios.put(
+            'https://jellyfish-app-wmpnc.ondigitalocean.app/api/students/655de6d6858a052f4b0c5ceb',
+            requestBody,
+            config
+        )
+
+        console.log('got data!!', data)
+    }
 
     return (
         <div className="px-6 py-12 h-fit w-screen">
@@ -211,9 +268,9 @@ const UpdateStudentScreen = () => {
                                 borderWidth: '1px', 
                                 borderColor: 'RGB(156 163 175)', 
                                 backgroundColor: 'RGB(255, 255, 255)',
-                        }),}} closeMenuOnSelect={true} isSearchable={false}  onChange={(e) => setOnDemandExam(e.value)} controlShouldRenderValue={onDemandExam ? true : false}/>
+                        }),}} closeMenuOnSelect={true} isSearchable={false}  onChange={(e) => setOnDemandExam(e.value)} controlShouldRenderValue={onDemandExam !== null ? true : false}/>
                     </div>
-                    <div class={`mb-6 ${onDemandExam ? 'block' : 'hidden'}`}>
+                    <div class={`mb-6 ${!onDemandExam ? 'hidden' : 'block'}`}>
                         <label for="onDemandExamMonth" class="block text-sm font-medium text-gray-900 mb-2">On demand exam month</label>
                         <Select options={onDemandExamMonthOptions} styles={{
                             control: (baseStyles, state) => ({
@@ -224,7 +281,7 @@ const UpdateStudentScreen = () => {
                                 borderWidth: '1px', 
                                 borderColor: 'RGB(156 163 175)', 
                                 backgroundColor: 'RGB(255, 255, 255)',
-                        }),}} closeMenuOnSelect={true} isSearchable={false}  onChange={(e) => setOnDEmandExamMonth(e.value)} controlShouldRenderValue={onDEmandExamMonth ? true : false}/>
+                        }),}} closeMenuOnSelect={true} isSearchable={false}  onChange={(e) => setOnDemandExamMonth(e.value)} controlShouldRenderValue={onDemandExamMonth ? true : false}/>
                     </div>
                     {/* <div class={`mb-6 ${onDemandExam ? 'block' : 'hidden'}`}>
                         <label for="onDemandExamMonth" class="block text-sm font-medium text-gray-900 mb-2">On demand exam month</label>
@@ -250,7 +307,7 @@ const UpdateStudentScreen = () => {
                                 borderWidth: '1px', 
                                 borderColor: 'RGB(156 163 175)', 
                                 backgroundColor: 'RGB(255, 255, 255)',
-                        }),}} closeMenuOnSelect={false}  components={animatedComponents} isMulti  onChange={(selectedOptions) => setOnDemandSubjects(selectedOptions)} onBlur={() => console.log('Blur')} onFocus={() => console.log('Focus')}/>
+                        }),}} closeMenuOnSelect={false}  components={animatedComponents} isMulti  onChange={(e) => valuesOnlyArrayOnDemandSubjects(e)} onBlur={() => console.log('Blur')} onFocus={() => console.log('Focus')}/>
                     </div>
                     <div class={`mb-6`}>
                         <label for="subjects" class="block text-sm font-medium text-gray-900 mb-2">Subjects</label>
@@ -263,10 +320,23 @@ const UpdateStudentScreen = () => {
                                 borderWidth: '1px', 
                                 borderColor: 'RGB(156 163 175)', 
                                 backgroundColor: 'RGB(255, 255, 255)',
-                        }),}} closeMenuOnSelect={false}  components={animatedComponents} isMulti  onChange={(selectedOptions) => setSubjects(selectedOptions)} onBlur={() => console.log('Blur')} onFocus={() => console.log('Focus')}/>
+                        }),}} closeMenuOnSelect={false}  components={animatedComponents} isMulti  onChange={(e) => valuesOnlyArraySubjects(e)} onBlur={() => console.log('Blur')} onFocus={() => console.log('Focus')}/>
                     </div>
-                    <div class={`mb-6`}>
-                        <label for="toc" class="block text-sm font-medium text-gray-900 mb-2">TOC</label>
+                    <div class="mb-6">
+                        <label for="TOC" class="block text-sm font-medium text-gray-900 mb-2">TOC</label>
+                        <Select options={onDemandExamOptions} styles={{
+                            control: (baseStyles, state) => ({
+                                ...baseStyles,
+                                borderColor: state.isFocused ? 'blue' : 'RGB(75, 85, 99)',
+                                borderRadius: '12px',
+                                padding: '0.05rem', 
+                                borderWidth: '1px', 
+                                borderColor: 'RGB(156 163 175)', 
+                                backgroundColor: 'RGB(255, 255, 255)',
+                        }),}} closeMenuOnSelect={true} isSearchable={false}  onChange={(e) => setToc(e.value)} controlShouldRenderValue={toc !== null ? true : false}/>
+                    </div>
+                    <div class={`mb-6 ${!toc ? 'hidden' : 'block'}`}>
+                        <label for="toc" class="block text-sm font-medium text-gray-900 mb-2">TOC subjects</label>
                         <Select options={onDemandSubjectsOptions} styles={{
                             control: (baseStyles, state) => ({
                                 ...baseStyles,
@@ -276,12 +346,12 @@ const UpdateStudentScreen = () => {
                                 borderWidth: '1px', 
                                 borderColor: 'RGB(156 163 175)', 
                                 backgroundColor: 'RGB(255, 255, 255)',
-                        }),}} closeMenuOnSelect={false}  components={animatedComponents} isMulti  onChange={(selectedOptions) => setToc(selectedOptions)} onBlur={() => console.log('Blur')} onFocus={() => console.log('Focus')}/>
+                        }),}} closeMenuOnSelect={false}  components={animatedComponents} isMulti  onChange={(e) => valuesOnlyArrayTocSubjects(e)} onBlur={() => console.log('Blur')} onFocus={() => console.log('Focus')}/>
                     </div>
                 </div>
+                {console.log(`printing the TOC ${toc}`)}
                 <div className="flex justify-center md:justify-end mt-8">
-                    <button type="button" class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 font-medium rounded-3xl text-sm px-4 py-4 md:px-8 md:py-3 me-2 mb-2 lg:mr-16 transition">Delete records</button>
-                    <button type="button" class="focus:outline-none text-white bg-green-500 hover:bg-green-800 focus:ring-4 font-medium rounded-3xl text-sm px-8 py-3 me-2 mb-2 lg:mr-16">Add student</button>
+                    <button type="button" class="focus:outline-none text-white bg-green-500 hover:bg-green-800 focus:ring-4 font-medium rounded-3xl text-sm w-40 h-10 px-4 me-2 mb-2" onClick={updateStudentHandler}>Add student</button>
             </div>
         </div>
     )
