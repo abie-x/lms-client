@@ -34,7 +34,7 @@ const NavigationScreen = () => {
                         <div className="text-xs">Update</div>
                     </button>
                 </div>
-                <div className="hidden md:flex justify-end items-center" onClick={() => navigate('/updateFee')}>
+                <div className="hidden md:flex justify-end items-center" onClick={() => navigate('/checkStudent?redirect=updateFee')}>
                     <button type="button" class="flex text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-md px-2 py-2.5 mb-2"><MdPayment className="mt-0 mr-2 h-5 w-5 md:h-5 md:w-5 lg:w-6 lg:h-6" /> Update fee</button>
                 </div>
 

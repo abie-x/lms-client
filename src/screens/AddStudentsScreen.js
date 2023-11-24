@@ -2,8 +2,11 @@ import React, {useState} from "react";
 import { batch } from "react-redux";
 import Select from 'react-select';
 import axios from "axios";
+import {useNavigate} from 'react-router-dom'
 
 const AddStudentsScreen = () => {
+
+    const navigate = useNavigate()
 
     const courseOptions = [
         {
@@ -131,8 +134,9 @@ const AddStudentsScreen = () => {
             config
         )
 
-        console.log('received data')
-        console.log(data)
+        if(data.name) {
+            navigate('/home')
+        }
  
         const {message} = data
         message && setError(message)
