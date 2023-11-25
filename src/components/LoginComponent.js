@@ -52,13 +52,13 @@ const LoginComponent = () => {
                 </div>
                 <div className="p-4">
                     <div class="w-full p-4 md:p-8  bg-white border border-gray-200 rounded-xl shadow ">
-                        <h5 class="text-xl font-medium text-gray-900 dark:text-white">Sign in to our platform</h5>
+                        {/* <h5 class="text-xl font-medium text-gray-900 dark:text-white">Sign in to our platform</h5> */}
                         <div className="relative rounded-md shadow-sm">
                             <input
                             type="email"
                             name="email"
                             id="email"
-                            className="border border-gray-600 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 pl-10 mb-4"
+                            className="border border-gray-600 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 pl-10 mb-4 mt-4"
                             placeholder="Enter mobile number"
                             onChange={(e) => setPhoneNumber(e.target.value)}
                             required
