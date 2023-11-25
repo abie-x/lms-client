@@ -120,13 +120,13 @@ const UpdateFeeStatusScreen = () => {
                     <h3 className="text-sm font-semibold">Past payment status</h3>
                     <div className="grid grid-cols-5 gap-2 mt-4">
                         <div className="w-full me-2 mb-2">
-                            <button type="button" className={`w-full ${student && student.feeDetails.examFeePaid ? 'text-green-500' : 'text-red-500'}  border ${student && student.feeDetails.examFeePaid ? 'border-green-500' : 'border-red-500'} font-medium rounded-lg text-sm px-1 py-1`}>
+                            <button type="button" className={`w-full ${student && student.feeDetails.registrationFeePaid ? 'text-green-500' : 'text-red-500'}  border ${student && student.feeDetails.examFeePaid ? 'border-green-500' : 'border-red-500'} font-medium rounded-lg text-sm px-1 py-1`}>
                                 <div>Reg</div>
                                 <div>Fee</div>
                             </button>
                         </div>
                         <div className="w-full me-2 mb-2">
-                            <button type="button" className= {`w-full ${student && student.feeDetails.registrationFeePaid ? 'text-green-500' : 'text-red-500'} border ${student && student.feeDetails.registrationFeePaid ? 'border-green-500' : 'border-red-500'} font-medium rounded-lg text-sm px-1 py-1`}>
+                            <button type="button" className= {`w-full ${student && student.feeDetails.examFeePaid ? 'text-green-500' : 'text-red-500'} border ${student && student.feeDetails.registrationFeePaid ? 'border-green-500' : 'border-red-500'} font-medium rounded-lg text-sm px-1 py-1`}>
                                 <div>Exam</div>
                                 <div>Fee</div>
                             </button>
