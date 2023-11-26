@@ -263,7 +263,7 @@ const UpdateStudentScreen = () => {
                                 backgroundColor: 'RGB(255, 255, 255)',
                         }),}} closeMenuOnSelect={true} isSearchable={false}  onChange={(e) => setStatus(e.value)} controlShouldRenderValue={status ? true : false}/>
                     </div>
-                    <div class="mb-6">
+                    {/* <div class="mb-6">
                         <label for="ondemandExam" class="block text-sm font-medium text-gray-900 mb-2">On demand exam</label>
                         <Select options={onDemandExamOptions} styles={{
                             control: (baseStyles, state) => ({
@@ -275,8 +275,8 @@ const UpdateStudentScreen = () => {
                                 borderColor: 'RGB(156 163 175)', 
                                 backgroundColor: 'RGB(255, 255, 255)',
                         }),}} closeMenuOnSelect={true} isSearchable={false}  onChange={(e) => setOnDemandExam(e.value)} controlShouldRenderValue={onDemandExam !== null ? true : false}/>
-                    </div>
-                    <div class={`mb-6 ${!onDemandExam ? 'hidden' : 'block'}`}>
+                    </div> */}
+                    {/* <div class={`mb-6 ${!onDemandExam ? 'hidden' : 'block'}`}>
                         <label for="onDemandExamMonth" class="block text-sm font-medium text-gray-900 mb-2">On demand exam month</label>
                         <Select options={onDemandExamMonthOptions} styles={{
                             control: (baseStyles, state) => ({
@@ -288,7 +288,7 @@ const UpdateStudentScreen = () => {
                                 borderColor: 'RGB(156 163 175)', 
                                 backgroundColor: 'RGB(255, 255, 255)',
                         }),}} closeMenuOnSelect={true} isSearchable={false}  onChange={(e) => setOnDemandExamMonth(e.value)} controlShouldRenderValue={onDemandExamMonth ? true : false}/>
-                    </div>
+                    </div> */}
                     {/* <div class={`mb-6 ${onDemandExam ? 'block' : 'hidden'}`}>
                         <label for="onDemandExamMonth" class="block text-sm font-medium text-gray-900 mb-2">On demand exam month</label>
                         <Select options={onDemandExamMonthOptions} styles={{
@@ -302,7 +302,7 @@ const UpdateStudentScreen = () => {
                                 backgroundColor: 'RGB(255, 255, 255)',
                         }),}} closeMenuOnSelect={true} isSearchable={false}  onChange={(e) => setOnDEmandExamMonth(e.value)} controlShouldRenderValue={onDEmandExamMonth ? true : false}/>
                     </div> */}
-                    <div class={`mb-6 ${!onDemandExam ? 'hidden' : 'block'}`}>
+                    {/* <div class={`mb-6 ${!onDemandExam ? 'hidden' : 'block'}`}>
                         <label for="onDemandExamSubjects" class="block text-sm font-medium text-gray-900 mb-2">OnDemand subjects</label>
                         <Select options={onDemandSubjectsOptions} styles={{
                             control: (baseStyles, state) => ({
@@ -314,7 +314,7 @@ const UpdateStudentScreen = () => {
                                 borderColor: 'RGB(156 163 175)', 
                                 backgroundColor: 'RGB(255, 255, 255)',
                         }),}} closeMenuOnSelect={false}  components={animatedComponents} isMulti  onChange={(e) => valuesOnlyArrayOnDemandSubjects(e)} onBlur={() => console.log('Blur')} onFocus={() => console.log('Focus')}/>
-                    </div>
+                    </div> */}
                     <div class={`mb-6`}>
                         <label for="subjects" class="block text-sm font-medium text-gray-900 mb-2">Subjects</label>
                         <Select options={onDemandSubjectsOptions} styles={{

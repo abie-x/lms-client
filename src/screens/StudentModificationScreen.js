@@ -2,6 +2,9 @@ import React, {useState} from "react";
 import Select from 'react-select';
 import axios from "axios";
 import {useNavigate} from 'react-router-dom'
+import makeAnimated from 'react-select/animated';
+
+const animatedComponents = makeAnimated();
 
 const StudentModificationScreen = () => {
 
@@ -14,6 +17,7 @@ const StudentModificationScreen = () => {
     const [examCentre, setExamCentre] = useState(null)
     const [examMonth, setExamMonth] = useState(null)
     const [onDemandExamMonth, setOnDEmandExamMonth] = useState(null)
+    const [onDemandSubjects, setOnDemandSubjects] = useState(null)
     const [lastExamYear, setLastExamYear] = useState(null)
 
     const existingStudentOptions = [
@@ -88,6 +92,34 @@ const StudentModificationScreen = () => {
             value: 'December'
         }
     ]
+
+    const onDemandSubjectsOptions = [
+        {
+            label: 'History',
+            value: 'History'
+        },
+        {
+            label: 'Politics',
+            value: 'Politics'
+        },
+        {
+            label: 'Geography',
+            value: 'Geography'
+        },
+        {
+            label: 'Mathematics',
+            value: 'Mathematics'
+        },
+        {
+            label: 'Chemistry',
+            value: 'Chemistry'
+        }
+    ]
+
+    const valuesOnlyArrayOnDemandSubjects = (e) => {
+        const newOnDemandSubjects = e.map(obj => obj.value)
+        setOnDemandSubjects(newOnDemandSubjects)
+    }
 
     const updateStudentHandler = async () => {
 
@@ -199,6 +231,19 @@ const StudentModificationScreen = () => {
                                 borderColor: 'RGB(156 163 175)', 
                                 backgroundColor: 'RGB(255, 255, 255)',
                         }),}} closeMenuOnSelect={true} isSearchable={false}  onChange={(e) => setOnDEmandExamMonth(e.value)} controlShouldRenderValue={onDemandExamMonth ? true : false}/>
+                    </div>
+                    <div class={`mb-6 ${examMode === 'Ondemand exam' || null ? 'block' : 'hidden'}`}>
+                        <label for="onDemandExamSubjects" class="block text-sm font-medium text-gray-900 mb-2">OnDemand subjects</label>
+                        <Select options={onDemandSubjectsOptions} styles={{
+                            control: (baseStyles, state) => ({
+                                ...baseStyles,
+                                borderColor: state.isFocused ? 'blue' : 'RGB(75, 85, 99)',
+                                borderRadius: '12px',
+                                padding: '0.05rem', 
+                                borderWidth: '1px', 
+                                borderColor: 'RGB(156 163 175)', 
+                                backgroundColor: 'RGB(255, 255, 255)',
+                        }),}} closeMenuOnSelect={false}  components={animatedComponents} isMulti  onChange={(e) => valuesOnlyArrayOnDemandSubjects(e)} onBlur={() => console.log('Blur')} onFocus={() => console.log('Focus')}/>
                     </div>
                     <div class={`mb-6 ${examMode === 'Normal exam' || null ? 'block' : 'hidden'}`}>
                         <label for="normalExamMonth" class="block text-sm font-medium text-gray-900 mb-2">Normal exam month</label>
