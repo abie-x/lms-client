@@ -184,7 +184,7 @@ const UpdateStudentScreen = () => {
             ...(email !== null && { email }),
             ...(password !== null && { password }),
             ...(prevResult !== null && { results: prevResult }),
-            ...(examCentre !== null && { examCentre }),
+            // ...(examCentre !== null && { examCentre }),
             ...(refNo !== null && { referenceNumber: refNo }),
             ...(enrNo !== null && { enrollmentNumber: enrNo }),
             ...(status !== null && { status }),
@@ -238,10 +238,10 @@ const UpdateStudentScreen = () => {
                         <label for="result" class="block text-sm font-medium text-gray-900 mb-2">Previous result</label>
                         <input type="text" id="result" role="presentation" autoComplete="off" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="www.nios.com/results?" onChange={(e) => setPrevResult(e.target.value)} required />
                     </div>
-                    <div class="mb-6">
+                    {/* <div class="mb-6">
                         <label for="examCentre" class="block text-sm font-medium text-gray-900 mb-2">Exam centre</label>
                         <input type="text" id="examCentre" role="presentation" autoComplete="off" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="Edappal" onChange={(e) => setExamCentre(e.target.value)} required />
-                    </div>
+                    </div> */}
                     <div class="mb-6">
                         <label for="refNo" class="block text-sm font-medium text-gray-900 mb-2">Reference no</label>
                         <input type="text" id="refNo" role="presentation" autoComplete="off" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="ACXX789K" onChange={(e) => setRefNo(e.target.value)} required />

@@ -1,12 +1,15 @@
 import React, {useState} from "react";
 import Select from 'react-select';
 import axios from "axios";
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, useLocation} from 'react-router-dom'
 import makeAnimated from 'react-select/animated';
 
 const animatedComponents = makeAnimated();
 
 const StudentModificationScreen = () => {
+
+    const { state } = useLocation();
+    const { id } = state 
 
     const navigate = useNavigate()
 
@@ -135,13 +138,15 @@ const StudentModificationScreen = () => {
             ...(stream !== null && { registrationStream: stream }),
             ...(examMode !== null && examMode === 'Ondemand exam' && { onDemandExam: true }),
             ...(examMode !== null && examMode === 'Normal exam' && { onDemandExam: false }),
+            ...(examMode !== null && {examMode}),
             ...(examMonth !== null && { examMonth }),
+            ...(onDemandSubjects !== null && { onDemandSubjects }),
             ...(enrollmentNumber !== null && { enrollmentNumber }),
             ...(lastExamYear !== null && { lastExamYear }),
         }
 
         const { data } = await axios.put(
-            'https://jellyfish-app-wmpnc.ondigitalocean.app/api/students/655de6d6858a052f4b0c5ceb',
+            `http://127.0.0.1:5000/api/students/updateExisting/${id}`,
             requestBody,
             config
         )
