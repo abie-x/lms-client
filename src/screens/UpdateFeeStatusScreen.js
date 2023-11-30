@@ -15,6 +15,7 @@ const UpdateFeeStatusScreen = () => {
     const [isFocused, setIsFocused] = useState(true);
     const [studentDetails, setStudentDetails] = useState(null)
     const [amount, setAmount] = useState(0)
+    const [error, setError] = useState(null)
 
     const [student, setStudent] = useState(null)
 
@@ -58,46 +59,58 @@ const UpdateFeeStatusScreen = () => {
             const {data} = await axios.get(`https://jellyfish-app-wmpnc.ondigitalocean.app/api/students/${id}`)
             console.log('sending data...')
             console.log(data)
-            if(data) {
+            const {message, name} = data
+            if(name) {
                 setStudent(data)
+            } else if(message) {
+                setError(message)
             }
         }
         getStudentData()
     }, [])
 
     const updateFeeHandler = async () => {
-        const config = {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-        }
 
-        console.log('sending requests..')
-
-        let installmentNumber
-        console.log(paymentType)
-        // paymentType === 'firstTerm' ? installmentNumber = 1 : paymentType === 'secondTerm' ? installmentNumber = 2 : paymentType === 'thirdTerm' ? installmentNumber = 3 : installmentNumber = 0
-        if(feeType === 'firstTerm') {
-            installmentNumber = 1
-        } else if(feeType === 'secondTerm') {
-            installmentNumber = 2
-        } else if(feeType === 'thirdTerm') {
-            installmentNumber = 3
+        if(!feeType || !paymentType || !amount) {
+            setError('Please fill all required fields')
         } else {
-            installmentNumber = 4
+            const config = {
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+            }
+    
+            console.log('sending requests..')
+    
+            let installmentNumber
+            console.log(paymentType)
+            // paymentType === 'firstTerm' ? installmentNumber = 1 : paymentType === 'secondTerm' ? installmentNumber = 2 : paymentType === 'thirdTerm' ? installmentNumber = 3 : installmentNumber = 0
+            if(feeType === 'firstTerm') {
+                installmentNumber = 1
+            } else if(feeType === 'secondTerm') {
+                installmentNumber = 2
+            } else if(feeType === 'thirdTerm') {
+                installmentNumber = 3
+            } else {
+                installmentNumber = 4
+            }
+    
+            const { data } = await axios.put(
+                'https://jellyfish-app-wmpnc.ondigitalocean.app/api/students/fees/nios',
+                { phoneNumber: student.phoneNumber, feeType, installmentNumber, amount: parseInt(amount) },
+                config
+            )
+    
+            const {message} = data
+    
+            if(data.status === 'success') {
+                navigate('/home')
+            } else if(message) {
+                setError(message)
+            }
         }
 
-        const { data } = await axios.put(
-            'https://jellyfish-app-wmpnc.ondigitalocean.app/api/students/fees/nios',
-            { phoneNumber: student.phoneNumber, feeType, installmentNumber, amount: parseInt(amount) },
-            config
-        )
-
-        if(data.status === 'success') {
-            navigate('/home')
-        } else {
-            console.log(data.message)
-        }
+        
 
         // if(data.name) {
         //     navigate('/home')
@@ -183,6 +196,9 @@ const UpdateFeeStatusScreen = () => {
                 <div className="w-full px-3 flex justify-end">
                     <label className="text-xs md:text-sm font-medium text-gray-900 mb-2">Total fee: {student && student.feeDetails.totalAmount} <span className="ml-5 text-red-500">Pending fee: {student && student.feeDetails.totalAmount - student.feeDetails.paidAmount}</span></label>
                 </div>
+                {error && <div class="p-4 mb-4 mt-2 text-sm text-red-800 rounded-lg bg-red-100" role="alert">
+                            <span class="font-medium"></span> {error}
+                </div>}
                 <div className="w-full flex justify-end mt-2 mb-1">
                     <button type="button" class="focus:outline-none text-white bg-green-500 hover:bg-red-800 focus:ring-4 font-medium rounded-md text-sm px-2 py-2 md:px-5 md:py-2.5 transition" onClick={updateFeeHandler}>Update fee</button>
                 </div>

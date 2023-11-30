@@ -22,6 +22,7 @@ const StudentModificationScreen = () => {
     const [onDemandExamMonth, setOnDEmandExamMonth] = useState(null)
     const [onDemandSubjects, setOnDemandSubjects] = useState(null)
     const [lastExamYear, setLastExamYear] = useState(null)
+    const [error, setError] = useState(null)
 
     const existingStudentOptions = [
         {
@@ -47,6 +48,17 @@ const StudentModificationScreen = () => {
 
     const examMonthOptions = [
         {
+            label: 'April',
+            value: 'April'
+        },
+        {
+            label: 'September',
+            value: 'September'
+        }
+    ]
+
+    const onDemandExamMonthOptions = [
+        {
             label: 'January',
             value: 'January'
         },
@@ -57,10 +69,6 @@ const StudentModificationScreen = () => {
         {
             label: 'March',
             value: 'March'
-        },
-        {
-            label: 'April',
-            value: 'April'
         },
         {
             label: 'May',
@@ -79,10 +87,6 @@ const StudentModificationScreen = () => {
             value: 'August'
         },
         {
-            label: 'September',
-            value: 'September'
-        },
-        {
             label: 'October',
             value: 'October'
         },
@@ -95,6 +99,7 @@ const StudentModificationScreen = () => {
             value: 'December'
         }
     ]
+
 
     const onDemandSubjectsOptions = [
         {
@@ -134,28 +139,36 @@ const StudentModificationScreen = () => {
             },
         }
 
-        const requestBody = {
-            ...(stream !== null && { registrationStream: stream }),
-            ...(examMode !== null && examMode === 'Ondemand exam' && { onDemandExam: true }),
-            ...(examMode !== null && examMode === 'Normal exam' && { onDemandExam: false }),
-            ...(examMode !== null && {examMode}),
-            ...(examMonth !== null && { examMonth }),
-            ...(onDemandSubjects !== null && { onDemandSubjects }),
-            ...(enrollmentNumber !== null && { enrollmentNumber }),
-            ...(lastExamYear !== null && { lastExamYear }),
+        if(!stream || !examMode  || !examCentre  ||!enrollmentNumber || !lastExamYear) {
+            setError('Please fill all required fields')
+        } else {
+            const requestBody = {
+                ...(stream !== null && { registrationStream: stream }),
+                ...(examMode !== null && examMode === 'Ondemand exam' && { onDemandExam: true }),
+                ...(examMode !== null && examMode === 'Normal exam' && { onDemandExam: false }),
+                ...(examMode !== null && {examMode}),
+                ...(examMonth !== null && { examMonth }),
+                ...(onDemandExamMonth !== null && { onDemandExamMonth }),
+                ...(examCentre !== null && { examCentre }),
+                ...(onDemandSubjects !== null && { onDemandSubjects }),
+                ...(enrollmentNumber !== null && { enrollmentNumber }),
+                ...(lastExamYear !== null && { lastExamYear }),
+            }
+    
+            const { data } = await axios.put(
+                `https://jellyfish-app-wmpnc.ondigitalocean.app/api/students/updateExisting/${id}`,
+                requestBody,
+                config
+            )
+    
+            if(data.name) {
+                navigate('/home')
+            }
+    
+            console.log('got data!!', data)
         }
 
-        const { data } = await axios.put(
-            `https://jellyfish-app-wmpnc.ondigitalocean.app/api/students/updateExisting/${id}`,
-            requestBody,
-            config
-        )
-
-        if(data.name) {
-            navigate('/home')
-        }
-
-        console.log('got data!!', data)
+        
 
     }
 
@@ -207,6 +220,20 @@ const StudentModificationScreen = () => {
             <div className="md:grid md:grid-cols-3 md:gap-x-4 lg:grid-cols-4 h-fit">
                 <RadioComponent />
                 <div class="mb-6">
+                        <label for="examMode" class="block text-sm font-medium text-gray-900 mb-2">Existing student</label>
+                        <Select options={existingStudentOptions} styles={{
+                            control: (baseStyles, state) => ({
+                                ...baseStyles,
+                                borderColor: state.isFocused ? 'blue' : 'RGB(75, 85, 99)',
+                                borderRadius: '12px',
+                                padding: '0.05rem', 
+                                borderWidth: '1px', 
+                                borderColor: 'RGB(156 163 175)', 
+                                backgroundColor: 'RGB(255, 255, 255)',
+                                fontSize: "14px"
+                        }),}} closeMenuOnSelect={true} isSearchable={false}  onChange={(e) => setExistingStudent(e.value)} controlShouldRenderValue={existingStudent !== null ? true : false}/>
+                </div>
+                <div class="mb-6">
                     <label for="enrollmentNumber" class="block text-sm font-medium text-gray-900 mb-2">Enrollment number</label>
                     <input type="text" id="enrollmentNumber" value={enrollmentNumber} class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="CDJ1233J" required onChange={(e) => setEnrollmentNumber(e.target.value)}/>
                 </div>
@@ -222,11 +249,11 @@ const StudentModificationScreen = () => {
                                 borderColor: 'RGB(156 163 175)', 
                                 backgroundColor: 'RGB(255, 255, 255)',
                                 fontSize: "14px"
-                        }),}} closeMenuOnSelect={true} isSearchable={false}  onChange={(e) => setExamMode(e.value)} controlShouldRenderValue={examMode ? true : false}/>
+                        }),}} closeMenuOnSelect={true} isSearchable={false}  onChange={(e) => setExamMode(e.value)} controlShouldRenderValue={existingStudent !== null ? true : false}/>
                 </div>
                 <div class={`mb-6 ${examMode === 'Ondemand exam' || null ? 'block' : 'hidden'}`}>
                         <label for="onDemandExamMonth" class="block text-sm font-medium text-gray-900 mb-2">On demand exam month</label>
-                        <Select options={examMonthOptions} styles={{
+                        <Select options={onDemandExamMonthOptions} styles={{
                             control: (baseStyles, state) => ({
                                 ...baseStyles,
                                 borderColor: state.isFocused ? 'blue' : 'RGB(75, 85, 99)',
@@ -263,15 +290,18 @@ const StudentModificationScreen = () => {
                                 backgroundColor: 'RGB(255, 255, 255)',
                         }),}} closeMenuOnSelect={true} isSearchable={false}  onChange={(e) => setExamMonth(e.value)} controlShouldRenderValue={examMonth ? true : false}/>
                     </div>
-                <div class="mb-6">
+                <div class={`mb-6 ${existingStudent ? 'block' : 'hidden'}`}>
                     <label for="examCentre" class="block text-sm font-medium text-gray-900 mb-2">Exam centre</label>
                     <input type="text" id="enrollmentNumber" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="CDJ1233J" required onChange={(e) => setExamCentre(e.target.value)}/>
                 </div>
                 <div class="mb-6">
-                    <label for="lastExamYear" class="block text-sm font-medium text-gray-900 mb-2">Year of Last Exam</label>
+                    <label for="lastExamYear" class="block text-sm font-medium text-gray-900 mb-2">Year of NIOS Last Exam</label>
                     <input type="text" id="lastYearExam" value={lastExamYear} class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="2019" required onChange={(e) => setLastExamYear(e.target.value)}/>
                 </div>
             </div>
+            {error && <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100" role="alert">
+                            <span class="font-medium"></span> {error}
+                </div>}
             <div className="flex justify-center md:justify-end mt-8">
                     <button type="button" class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 font-medium rounded-3xl text-sm px-4 py-4 md:px-8 md:py-3 me-2 mb-2 lg:mr-16 transition" onClick={deleteRecordsHandler}>Delete records</button>
                     <button type="button" class="focus:outline-none text-white bg-green-500 hover:bg-green-800 focus:ring-4 font-medium rounded-3xl text-sm px-8 py-3 me-2 mb-2 lg:mr-16" onClick={updateStudentHandler}>Update</button>

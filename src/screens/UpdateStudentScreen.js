@@ -13,44 +13,25 @@ const UpdateStudentScreen = () => {
 
     const navigate = useNavigate()
 
-    const [name, setName] = useState('')
-    const [phoneNumber, setPhoneNumber] = useState('')
-    const [parentNumber, setParentNumber] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [prevResult, setPrevResult] = useState('')
-    const [examCentre, setExamCentre] = useState('')
-    const [refNo, setRefNo] = useState('')
-    const [enrNo, setEnrNo] = useState('')
-
-    const [status, setStatus] = useState(null)
+    const [name, setName] = useState(null)
+    const [phoneNumber, setPhoneNumber] = useState(null)
+    const [parentNumber, setParentNumber] = useState(null)
+    const [email, setEmail] = useState(null)
+    const [password, setPassword] = useState(null)
+    const [confirmPassword, setConfirmPassword] = useState(null)
+    const [prevResult, setPrevResult] = useState(null)
+    const [refNo, setRefNo] = useState(null)
     const [onDemandExam, setOnDemandExam] = useState(null)
     const [onDemandExamMonth, setOnDemandExamMonth] = useState(null)
     const [subjects, setSubjects] = useState(null)
     const [onDemandSubjects, setOnDemandSubjects] = useState(null)
+    const [optionalSubjectsExam, setOptionalSubjectsExam] = useState(null)
+    const [optionalSubjects, setOptionalSubjects] = useState(null)
     const [toc, setToc] = useState(null)
     const [tocSubjects, setTocSubjects] = useState(null)
+    const [error, setError] = useState(null)
 
-    const statusOptions = [
-        {
-            label: 'Pass',
-            value: 'Pass'
-        },
-        {
-            label: 'Fail',
-            value: 'Fail'
-        },
-        {
-            label: 'Dropout',
-            value: 'Dropout'
-        },
-        {
-            label: 'Other',
-            value: 'Other'
-        }
-    ]
-
-    const onDemandExamOptions = [
+    const booleanOptions = [
         {
             label: 'Yes',
             value: true
@@ -135,6 +116,28 @@ const UpdateStudentScreen = () => {
         }
     ]
 
+    const optionalSubjectsOptions = [
+        {
+            label: 'History',
+            value: 'History'
+        },
+        {
+            label: 'Politics',
+            value: 'Politics'
+        },
+        {
+            label: 'Geography',
+            value: 'Geography'
+        },
+        {
+            label: 'Mathematics',
+            value: 'Mathematics'
+        },
+        {
+            label: 'Chemistry',
+            value: 'Chemistry'
+        }
+    ]
 
     useEffect(() => {
         const fetchStudentDetails = async () => {
@@ -159,9 +162,9 @@ const UpdateStudentScreen = () => {
         
     }
 
-    const valuesOnlyArrayOnDemandSubjects = (e) => {
-        const newOnDemandSubjects = e.map(obj => obj.value)
-        setOnDemandSubjects(newOnDemandSubjects)
+    const valuesOnlyOptionalSubjects = (e) => {
+        const newOptionalSubjects = e.map(obj => obj.value)
+        setOptionalSubjects(newOptionalSubjects)
     }
 
     const valuesOnlyArrayTocSubjects = (e) => {
@@ -184,29 +187,34 @@ const UpdateStudentScreen = () => {
             ...(email !== null && { email }),
             ...(password !== null && { password }),
             ...(prevResult !== null && { results: prevResult }),
-            // ...(examCentre !== null && { examCentre }),
             ...(refNo !== null && { referenceNumber: refNo }),
-            ...(enrNo !== null && { enrollmentNumber: enrNo }),
-            ...(status !== null && { status }),
             ...(onDemandExam !== null && { onDemandExam }),
             ...(onDemandExamMonth !== null && { onDemandExamMonth }),
             ...(subjects !== null && { subjects }),
             ...(onDemandSubjects !== null && { onDemandSubjects }),
             ...(toc !== null && { toc }),
+            ...(optionalSubjectsExam !== null && { optionalSubjectsExam }), //make a new db field in backend.
+            ...(optionalSubjects !== null && { optionalSubjects }), //make a new db field in backend.
             ...(tocSubjects !== null && { tocSubjects }),
-          };
+          }  
+          
+          if(password !== confirmPassword) {
+            setError('passswords doesnt match')
+          } else {
+                const { data } = await axios.put(
+                    `https://jellyfish-app-wmpnc.ondigitalocean.app/api/students/${id}`,
+                    requestBody,
+                    config
+                )
 
-        const { data } = await axios.put(
-            `https://jellyfish-app-wmpnc.ondigitalocean.app/api/students/${id}`,
-            requestBody,
-            config
-        )
+                const {message, name} = data
 
-        if(data.name) {
-            navigate('/home')
+                if(data.name) {
+                    navigate(`/home`)
+                } else if(message) {
+                    setError(message)
+                }
         }
-
-        console.log('got data!!', data)
     }
 
     return (
@@ -235,6 +243,10 @@ const UpdateStudentScreen = () => {
                         <input type="text" id="password" role="presentation" autoComplete="off" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="********" onChange={(e) => setPassword(e.target.value)} required />
                     </div>
                     <div class="mb-6">
+                        <label for="confirmPassword" class="block text-sm font-medium text-gray-900 mb-2">Confirm Password</label>
+                        <input type="text" id="confirmPassword" role="presentation" autoComplete="off" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="********" onChange={(e) => setConfirmPassword(e.target.value)} required />
+                    </div>
+                    <div class="mb-6">
                         <label for="result" class="block text-sm font-medium text-gray-900 mb-2">Previous result</label>
                         <input type="text" id="result" role="presentation" autoComplete="off" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="www.nios.com/results?" onChange={(e) => setPrevResult(e.target.value)} required />
                     </div>
@@ -245,23 +257,6 @@ const UpdateStudentScreen = () => {
                     <div class="mb-6">
                         <label for="refNo" class="block text-sm font-medium text-gray-900 mb-2">Reference no</label>
                         <input type="text" id="refNo" role="presentation" autoComplete="off" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="ACXX789K" onChange={(e) => setRefNo(e.target.value)} required />
-                    </div>
-                    <div class="mb-6">
-                        <label for="enrNo" class="block text-sm font-medium text-gray-900 mb-2">Enrollment no</label>
-                        <input type="text" id="enrNo" role="presentation" autoComplete="off" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="ACXX789K" onChange={(e) => setEnrNo(e.target.value)} required />
-                    </div>
-                    <div class="mb-6">
-                        <label for="status" class="block text-sm font-medium text-gray-900 mb-2">Status</label>
-                        <Select options={statusOptions} styles={{
-                            control: (baseStyles, state) => ({
-                                ...baseStyles,
-                                borderColor: state.isFocused ? 'blue' : 'RGB(75, 85, 99)',
-                                borderRadius: '12px',
-                                padding: '0.05rem', 
-                                borderWidth: '1px', 
-                                borderColor: 'RGB(156 163 175)', 
-                                backgroundColor: 'RGB(255, 255, 255)',
-                        }),}} closeMenuOnSelect={true} isSearchable={false}  onChange={(e) => setStatus(e.value)} controlShouldRenderValue={status ? true : false}/>
                     </div>
                     {/* <div class="mb-6">
                         <label for="ondemandExam" class="block text-sm font-medium text-gray-900 mb-2">On demand exam</label>
@@ -329,8 +324,34 @@ const UpdateStudentScreen = () => {
                         }),}} closeMenuOnSelect={false}  components={animatedComponents} isMulti  onChange={(e) => valuesOnlyArraySubjects(e)} onBlur={() => console.log('Blur')} onFocus={() => console.log('Focus')}/>
                     </div>
                     <div class="mb-6">
+                        <label for="optionalSubjects" class="block text-sm font-medium text-gray-900 mb-2">Optional subjects</label>
+                        <Select options={booleanOptions} styles={{
+                            control: (baseStyles, state) => ({
+                                ...baseStyles,
+                                borderColor: state.isFocused ? 'blue' : 'RGB(75, 85, 99)',
+                                borderRadius: '12px',
+                                padding: '0.05rem', 
+                                borderWidth: '1px', 
+                                borderColor: 'RGB(156 163 175)', 
+                                backgroundColor: 'RGB(255, 255, 255)',
+                        }),}} closeMenuOnSelect={true} isSearchable={false}  onChange={(e) => setOptionalSubjectsExam(e.value)} controlShouldRenderValue={optionalSubjectsExam !== null ? true : false}/>
+                    </div>
+                    <div class={`mb-6 ${!optionalSubjectsExam ? 'hidden' : 'block'}`}>
+                        <label for="optionalSubjectsOptions" class="block text-sm font-medium text-gray-900 mb-2">Optional subjects options </label>
+                        <Select options={optionalSubjectsOptions} styles={{
+                            control: (baseStyles, state) => ({
+                                ...baseStyles,
+                                borderColor: state.isFocused ? 'blue' : 'RGB(75, 85, 99)',
+                                borderRadius: '12px',
+                                padding: '0.05rem', 
+                                borderWidth: '1px', 
+                                borderColor: 'RGB(156 163 175)', 
+                                backgroundColor: 'RGB(255, 255, 255)',
+                        }),}} closeMenuOnSelect={false}  components={animatedComponents} isMulti  onChange={(e) => valuesOnlyOptionalSubjects(e)} onBlur={() => console.log('Blur')} onFocus={() => console.log('Focus')}/>
+                    </div>
+                    <div class="mb-6">
                         <label for="TOC" class="block text-sm font-medium text-gray-900 mb-2">TOC</label>
-                        <Select options={onDemandExamOptions} styles={{
+                        <Select options={booleanOptions} styles={{
                             control: (baseStyles, state) => ({
                                 ...baseStyles,
                                 borderColor: state.isFocused ? 'blue' : 'RGB(75, 85, 99)',
@@ -355,6 +376,9 @@ const UpdateStudentScreen = () => {
                         }),}} closeMenuOnSelect={false}  components={animatedComponents} isMulti  onChange={(e) => valuesOnlyArrayTocSubjects(e)} onBlur={() => console.log('Blur')} onFocus={() => console.log('Focus')}/>
                     </div>
                 </div>
+                {error && <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100" role="alert">
+                            <span class="font-medium"></span> {error}
+                </div>}
                 {console.log(`printing the TOC ${toc}`)}
                 <div className="flex justify-center md:justify-end mt-8">
                     <button type="button" class="focus:outline-none text-white bg-green-500 hover:bg-green-800 focus:ring-4 font-medium rounded-3xl text-sm w-40 h-10 px-4 me-2 mb-2" onClick={updateStudentHandler}>Add student</button>
