@@ -162,7 +162,9 @@ const StudentModificationScreen = () => {
             )
     
             if(data.name) {
-                navigate('/home')
+                setTimeout(() => {
+                    navigate('/home');
+                }, 2000);
             }
     
             console.log('got data!!', data)
@@ -295,7 +297,7 @@ const StudentModificationScreen = () => {
                     <input type="text" id="enrollmentNumber" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="CDJ1233J" required onChange={(e) => setExamCentre(e.target.value)}/>
                 </div>
                 <div class="mb-6">
-                    <label for="lastExamYear" class="block text-sm font-medium text-gray-900 mb-2">Year of NIOS Last Exam</label>
+                    <label for="lastExamYear" class="block text-sm font-medium text-gray-900 mb-2">Year of Last NIOS Exam</label>
                     <input type="text" id="lastYearExam" value={lastExamYear} class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="2019" required onChange={(e) => setLastExamYear(e.target.value)}/>
                 </div>
             </div>

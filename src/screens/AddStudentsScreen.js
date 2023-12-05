@@ -105,6 +105,7 @@ const AddStudentsScreen = () => {
     const [branch, setBranch] = useState(null)
     const [admCoordinator, setAdmCoordinator] = useState('')
     const [admYear, setAdmYear] = useState(null)
+    const [successMessage, setSuccessMessage] = useState(null)
 
     const changeIntake = (e) => {
         setIntake(e.value)
@@ -135,7 +136,10 @@ const AddStudentsScreen = () => {
         )
 
         if(data.name) {
-            navigate('/home')
+            setSuccessMessage('Student added successfully')
+            setTimeout(() => {
+                navigate('/home');
+            }, 1000);
         }
  
         const {message} = data
@@ -287,6 +291,10 @@ const AddStudentsScreen = () => {
 
             {error && <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100" role="alert">
                             <span class="font-medium"></span> {error}
+            </div>}
+
+            {successMessage && <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100" role="alert">
+                            <span class="font-medium"></span> {successMessage}
             </div>}
 
             <div className="flex justify-center md:justify-end mt-8">

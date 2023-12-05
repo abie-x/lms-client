@@ -16,6 +16,7 @@ const UpdateFeeStatusScreen = () => {
     const [studentDetails, setStudentDetails] = useState(null)
     const [amount, setAmount] = useState(0)
     const [error, setError] = useState(null)
+    const [successMessage, setSuccessMessage] = useState(null)
 
     const [student, setStudent] = useState(null)
 
@@ -53,6 +54,13 @@ const UpdateFeeStatusScreen = () => {
         }
     ]
 
+    const paymentOptionsUpdated = [
+        {
+            label: 'Full payment',
+            value: 'fullPayment'
+        }
+    ]
+
     //getting the student details
     useEffect(() => {
         const getStudentData = async () => {
@@ -68,6 +76,8 @@ const UpdateFeeStatusScreen = () => {
         }
         getStudentData()
     }, [])
+
+    
 
     const updateFeeHandler = async () => {
 
@@ -104,7 +114,10 @@ const UpdateFeeStatusScreen = () => {
             const {message} = data
     
             if(data.status === 'success') {
-                navigate('/home')
+                setSuccessMessage('Fees added successfully')
+                setTimeout(() => {
+                    navigate('/home');
+                  }, 1000);
             } else if(message) {
                 setError(message)
             }
@@ -178,7 +191,7 @@ const UpdateFeeStatusScreen = () => {
                             backgroundColor: 'RGB(255, 255, 255)',
                         }),}} className="border-white" closeMenuOnSelect={true} isSearchable={false}  onChange={(e) => setFeeType(e.value)} name="feeType" controlShouldRenderValue={feeType ? true : feeType === false ? true : false}/>
                 </div>
-                <div class="mb-3 mt-6 px-3">
+                <div class={`mb-3 mt-6 px-3 ${feeType === 'registrationFees' || feeType === 'examFees' || feeType=== null ? 'hidden' : 'block'}`}>
                         <label for="paymentType" class="block text-sm font-medium text-gray-900 mb-2">Select fee type</label>
                         <Select options={paymentOptions} styles={{
                             control: (baseStyles, state) => ({
@@ -188,6 +201,17 @@ const UpdateFeeStatusScreen = () => {
                             borderWidth: '0px', 
                             backgroundColor: 'RGB(255, 255, 255)',
                         }),}} className="border-white" closeMenuOnSelect={true} isSearchable={false}  onChange={(e) => setPaymentType(e.value)} name="paymentType" controlShouldRenderValue={paymentType ? true : paymentType === false ? true : false}/>
+                </div>
+                <div class={`mb-3 mt-6 px-3 ${feeType === 'registrationFees' || feeType === 'examFees' || feeType=== null ? 'block' : 'hidden'}`}>
+                        <label for="paymentType" class="block text-sm font-medium text-gray-900 mb-2">Select fee type</label>
+                        <Select options={paymentOptionsUpdated} styles={{
+                            control: (baseStyles, state) => ({
+                            ...baseStyles,
+                            borderRadius: '.5rem',
+                            padding: '0.2rem', 
+                            borderWidth: '0px', 
+                            backgroundColor: 'RGB(255, 255, 255)',
+                        }),}} className="border-white" closeMenuOnSelect={true} isSearchable={false} name="paymentType" onChange={(e) => setPaymentType(e.value)} controlShouldRenderValue={paymentType ? true : paymentType === false ? true : false}/>
                 </div>
                 <div class="mb-3 mt-6 px-3">
                     <label for="enrollmentNumber" class="block text-sm font-medium text-gray-900 mb-2">Amount</label>
@@ -199,13 +223,16 @@ const UpdateFeeStatusScreen = () => {
                 {error && <div class="p-4 mb-4 mt-2 text-sm text-red-800 rounded-lg bg-red-100" role="alert">
                             <span class="font-medium"></span> {error}
                 </div>}
+                {successMessage && <div class="p-4 mb-4 mt-2 text-sm text-green-800 rounded-lg bg-green-100" role="alert">
+                            <span class="font-medium"></span> {successMessage}
+                </div>}
                 <div className="w-full flex justify-end mt-2 mb-1">
                     <button type="button" class="focus:outline-none text-white bg-green-500 hover:bg-red-800 focus:ring-4 font-medium rounded-md text-sm px-2 py-2 md:px-5 md:py-2.5 transition" onClick={updateFeeHandler}>Update fee</button>
                 </div>
                 {console.log('id', id)}
             </div> 
             <div className="hidden lg:block h-full w-full bg-red-300">
-                
+                {console.log(feeType)}
             </div>
         </div>
     )

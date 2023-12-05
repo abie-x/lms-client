@@ -30,6 +30,7 @@ const UpdateStudentScreen = () => {
     const [toc, setToc] = useState(null)
     const [tocSubjects, setTocSubjects] = useState(null)
     const [error, setError] = useState(null)
+    const [successMessage, setSuccessMessage] = useState(null)
 
     const booleanOptions = [
         {
@@ -210,7 +211,9 @@ const UpdateStudentScreen = () => {
                 const {message, name} = data
 
                 if(data.name) {
-                    navigate(`/home`)
+                    setTimeout(() => {
+                        navigate('/home');
+                    }, 2000);
                 } else if(message) {
                     setError(message)
                 }
