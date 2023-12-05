@@ -2,6 +2,8 @@ import React, {useState, useEffect} from "react";
 import Select from 'react-select';
 import axios from "axios";
 import {useLocation, useNavigate} from 'react-router-dom'
+import Lottie from "lottie-react";
+import animationData from '../assets/Animation - 1701778388326.json'
 
 const UpdateFeeStatusScreen = () => {
 
@@ -14,7 +16,7 @@ const UpdateFeeStatusScreen = () => {
     const [paymentType, setPaymentType] = useState(null)
     const [isFocused, setIsFocused] = useState(true);
     const [studentDetails, setStudentDetails] = useState(null)
-    const [amount, setAmount] = useState(0)
+    const [amount, setAmount] = useState(null)
     const [error, setError] = useState(null)
     const [successMessage, setSuccessMessage] = useState(null)
 
@@ -123,6 +125,12 @@ const UpdateFeeStatusScreen = () => {
             }
         }
 
+        const changeFeeAmount = () => {
+            if(feeType === 'registrationFees' && paymentType === 'fullPayment') {
+
+            }
+        }
+
         
 
         // if(data.name) {
@@ -131,7 +139,7 @@ const UpdateFeeStatusScreen = () => {
     }
 
     return (
-        <div className="h-fit w-screen bg-slate-100 px-6 md:px-20 py-8 lg:grid lg:grid-cols-2">
+        <div className="h-fit w-screen bg-slate-100 px-6 md:px-20 py-8 lg:py-2 lg:grid lg:grid-cols-2">
             <div className="h-full w-full md:px-28 lg:px-4 xl:px-28 xl:mt-2 md:py-3 bg-slate-100" >
                 <h3 className="text-base md:text-xl font-semibold">Student details</h3>
                 <div className="mt-5 text-sm flex gap-4">
@@ -215,8 +223,9 @@ const UpdateFeeStatusScreen = () => {
                 </div>
                 <div class="mb-3 mt-6 px-3">
                     <label for="enrollmentNumber" class="block text-sm font-medium text-gray-900 mb-2">Amount</label>
-                    <input type="text" id="enrollmentNumber" class="bg-white border border-white text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="CDJ1233J" onChange={(e) => setAmount(e.target.value)} required/>
+                    <input type="text" id="enrollmentNumber" class="bg-white border border-white text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="1000" value={(feeType === 'registrationFees' && paymentType === 'fullPayment' && student) ? student.feeDetails.registrationFees : ((feeType === 'examFees' && paymentType === 'fullPayment' && student) ? student.feeDetails.examFees : amount)} onChange={(e) => setAmount(e.target.value)} required/>
                 </div>
+                {console.log('the amount is', amount)}
                 <div className="w-full px-3 flex justify-end">
                     <label className="text-xs md:text-sm font-medium text-gray-900 mb-2">Total fee: {student && student.feeDetails.totalAmount} <span className="ml-5 text-red-500">Pending fee: {student && student.feeDetails.totalAmount - student.feeDetails.paidAmount}</span></label>
                 </div>
@@ -231,8 +240,10 @@ const UpdateFeeStatusScreen = () => {
                 </div>
                 {console.log('id', id)}
             </div> 
-            <div className="hidden lg:block h-full w-full bg-red-300">
-                {console.log(feeType)}
+            <div className="hidden lg:flex h-full w-full justify-center items-center">
+                <div className="w-full h-full flex justify-center">
+                    <Lottie animationData={animationData} className="w-5/6 h-full" />
+                </div>
             </div>
         </div>
     )
