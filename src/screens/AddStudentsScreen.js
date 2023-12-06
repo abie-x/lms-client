@@ -130,10 +130,12 @@ const AddStudentsScreen = () => {
         console.log('sending requests..')
 
         const { data } = await axios.post(
-            'https://jellyfish-app-wmpnc.ondigitalocean.app/api/students/nios',
+            'http://127.0.0.1:5000/api/students/nios',
             { name, place, year: admYear, course, batch, intake, mode, phoneNumber: phoneNum, parentNumber: parentNum, dob, email, branch, admissionCoordinator: admCoordinator },
             config
         )
+
+        console.log(data)
 
         if(data.name) {
             setSuccessMessage('Student added successfully')
