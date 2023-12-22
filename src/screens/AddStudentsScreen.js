@@ -8,6 +8,8 @@ const AddStudentsScreen = () => {
 
     const navigate = useNavigate()
 
+    const [loading, setLoading] = useState(false)
+
     const courseOptions = [
         {
             value: 'SSLC',
@@ -121,6 +123,10 @@ const AddStudentsScreen = () => {
     }
 
     const addStudentHandler = async () => {
+
+        setLoading(true)
+        setSuccessMessage('Hold on, Processing your request')
+        
         const config = {
             headers: {
               'Content-Type': 'application/json',
@@ -136,6 +142,7 @@ const AddStudentsScreen = () => {
         )
 
         if(data.name) {
+            setLoading(false)
             setSuccessMessage('Student added successfully')
             setTimeout(() => {
                 navigate('/home');
@@ -144,6 +151,11 @@ const AddStudentsScreen = () => {
  
         const {message} = data
         message && setError(message)
+        message && setSuccessMessage(null)
+
+        const timeoutId = setTimeout(() => {
+            setError(null);
+        }, 2000);
 
         // console.log(data)
         // console.log(name)
@@ -182,38 +194,41 @@ const AddStudentsScreen = () => {
             <div className="md:grid md:grid-cols-3 md:gap-x-4 lg:grid-cols-4 h-fit">
                 <div class="mb-6">
                     <label for="name" class="block text-sm font-medium text-gray-900 mb-2">Name</label>
-                    <input type="text" id="name" value={name} role="presentation" autoComplete="off" class="bg-white border border-gray-600 text-gray-900 text-sm rounded-3xl block w-full p-2.5" placeholder="John doe" required onChange={(e) => setName(e.target.value)} />
+                    <input type="text" id="name" value={name} role="presentation" autoComplete="off" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="John doe" required onChange={(e) => setName(e.target.value)} />
                 </div>
                 <div class="mb-6">
                     <label for="place" class="block text-sm font-medium text-gray-900 mb-2">Place</label>
-                    <input type="text" id="place" value={place} class="bg-white border border-gray-600 text-gray-900 text-sm rounded-3xl block w-full p-2.5" placeholder="Edappal" required onChange={(e) => setPlace(e.target.value)}/>
+                    <input type="text" id="place" value={place} class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="Edappal" required onChange={(e) => setPlace(e.target.value)}/>
                 </div>
                 <div class="mb-6">
                     <label for="year" class="block text-sm font-medium text-gray-900 mb-2">Year</label>
                     <Select options={yearOptions} styles={{
                         control: (baseStyles, state) => ({
-                        ...baseStyles,
-                        borderColor: state.isFocused ? 'blue' : 'RGB(75, 85, 99)',
-                        borderRadius: '1.5rem',
-                        padding: '0.2rem', 
-                        borderWidth: '1px', 
-                        borderColor: 'RGB(75, 85, 99)', 
-                        backgroundColor: 'RGB(255, 255, 255)',
+                            ...baseStyles,
+                            borderColor: state.isFocused ? 'blue' : 'RGB(75, 85, 99)',
+                            borderRadius: '12px',
+                            padding: '0.05rem', 
+                            borderWidth: '1px', 
+                            borderColor: 'RGB(156 163 175)', 
+                            backgroundColor: 'RGB(255, 255, 255)',
+                            fontSize: "14px"
                     }),}} closeMenuOnSelect={true} isSearchable={false}  onChange={(e) => setAdmYear(e.value)} controlShouldRenderValue={admYear ? true : false}/>
                 </div>
                 <div class="mb-6">
                     <label for="course" class="block text-sm font-medium text-gray-900 mb-2">Course</label>
                     <Select options={courseOptions} styles={{
                         control: (baseStyles, state) => ({
-                        ...baseStyles,
-                        borderColor: state.isFocused ? 'blue' : 'RGB(75, 85, 99)',
-                        borderRadius: '1.5rem',
-                        padding: '0.2rem', 
-                        borderWidth: '1px', 
-                        borderColor: 'RGB(75, 85, 99)', 
-                        backgroundColor: 'RGB(255, 255, 255)',
+                            ...baseStyles,
+                            borderColor: state.isFocused ? 'blue' : 'RGB(75, 85, 99)',
+                            borderRadius: '12px',
+                            padding: '0.05rem', 
+                            borderWidth: '1px', 
+                            borderColor: 'RGB(156 163 175)', 
+                            backgroundColor: 'RGB(255, 255, 255)',
+                            fontSize: "14px"
                     }),}} closeMenuOnSelect={true} isSearchable={false} onChange={changeCourse} controlShouldRenderValue={course ? true : false}/>
                 </div>
+                {console.log(loading)}
                 {course === 'Plustwo' && (
                     <div class="mb-6">
                     <label for="batch" class="block text-sm font-medium text-gray-900 mb-2">Batch</label>
@@ -232,60 +247,63 @@ const AddStudentsScreen = () => {
                     <label for="intake" class="block text-sm font-medium text-gray-900 mb-2">Intake</label>
                     <Select options={intakeOptions} styles={{
                         control: (baseStyles, state) => ({
-                        ...baseStyles,
-                        borderColor: state.isFocused ? 'blue' : 'RGB(75, 85, 99)',
-                        borderRadius: '1.5rem',
-                        padding: '0.2rem', 
-                        borderWidth: '1px', 
-                        borderColor: 'RGB(75, 85, 99)', 
-                        backgroundColor: 'RGB(255, 255, 255)',
+                            ...baseStyles,
+                            borderColor: state.isFocused ? 'blue' : 'RGB(75, 85, 99)',
+                            borderRadius: '12px',
+                            padding: '0.05rem', 
+                            borderWidth: '1px', 
+                            borderColor: 'RGB(156 163 175)', 
+                            backgroundColor: 'RGB(255, 255, 255)',
+                            fontSize: "14px"
                     }),}} closeMenuOnSelect={true} isSearchable={false}  onChange={changeIntake} controlShouldRenderValue={intake ? true : false}/>
                 </div>
                 <div class="mb-6">
                     <label for="mode" class="block text-sm font-medium text-gray-900 mb-2">Mode</label>
                     <Select options={modeOptions} styles={{
                         control: (baseStyles, state) => ({
-                        ...baseStyles,
-                        borderColor: state.isFocused ? 'blue' : 'RGB(75, 85, 99)',
-                        borderRadius: '1.5rem',
-                        padding: '0.2rem', 
-                        borderWidth: '1px', 
-                        borderColor: 'RGB(75, 85, 99)', 
-                        backgroundColor: 'RGB(255, 255, 255)',
+                            ...baseStyles,
+                            borderColor: state.isFocused ? 'blue' : 'RGB(75, 85, 99)',
+                            borderRadius: '12px',
+                            padding: '0.05rem', 
+                            borderWidth: '1px', 
+                            borderColor: 'RGB(156 163 175)', 
+                            backgroundColor: 'RGB(255, 255, 255)',
+                            fontSize: "14px"
                     }),}} closeMenuOnSelect={true} isSearchable={false}  onChange={(e) => setMode(e.value)} controlShouldRenderValue={mode ? true : false} />
                 </div>
                 <div class="mb-6">
                     <label for="phoneNum" class="block text-sm font-medium text-gray-900 mb-2">Phone number</label>
-                    <input type="number" id="phoneNum" value={phoneNum} class="bg-white border border-gray-600 text-gray-900 text-sm rounded-3xl block w-full p-2.5" placeholder="0123456789" required onChange={(e) => setPhoneNum(e.target.value)}/>
+                    <input type="text" id="phoneNum" value={phoneNum} class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="0123456789" required onChange={(e) => setPhoneNum(e.target.value)}/>
                 </div>
                 <div class="mb-6">
                     <label for="parentNum" class="block text-sm font-medium text-gray-900 mb-2">Parent number</label>
-                    <input type="number" id="parentNum" value={parentNum} class="bg-white border border-gray-600 text-gray-900 text-sm rounded-3xl block w-full p-2.5" placeholder="0123456789" required onChange={(e) => setParentNum(e.target.value)} />
+                    <input type="number" id="parentNum" value={parentNum} class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="0123456789" required onChange={(e) => setParentNum(e.target.value)} />
                 </div>
                 <div class="mb-6">
                     <label for="dob" class="block text-sm font-medium text-gray-900 mb-2">Date of Birth</label>
-                    <input type='date' value={dob}  onChange={(e) => setDob(e.target.value)}   class="bg-white border border-gray-600 text-gray-900 text-sm rounded-3xl block w-full p-2.5" placeholder="Select date" />
+                    <input type='date' value={dob}  onChange={(e) => setDob(e.target.value)}   class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="Select date" />
                 </div>
                 <div class="mb-6">
                     <label for="email" class="block text-sm font-medium text-gray-900 mb-2">Email</label>
-                    <input type="text" value={email} id="email" role="presentation" autoComplete="off" class="bg-white border border-gray-600 text-gray-900 text-sm rounded-3xl block w-full p-2.5" placeholder="admin@linfield.com" required onChange={(e) => setEmail(e.target.value)} />
+                    <input type="text" value={email} id="email" role="presentation" autoComplete="off" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="admin@linfield.com" required onChange={(e) => setEmail(e.target.value)} />
                 </div>
                 <div class="mb-6">
                     <label for="branch" class="block text-sm font-medium text-gray-900 mb-2">Branch</label>
                     <Select options={branchOptions} styles={{
                         control: (baseStyles, state) => ({
-                        ...baseStyles,
-                        borderColor: state.isFocused ? 'blue' : 'RGB(75, 85, 99)',
-                        borderRadius: '1.5rem',
-                        padding: '0.2rem', 
-                        borderWidth: '1px', 
-                        borderColor: 'RGB(75, 85, 99)', 
-                        backgroundColor: 'RGB(255, 255, 255)',
+                            ...baseStyles,
+                            borderColor: state.isFocused ? 'blue' : 'RGB(75, 85, 99)',
+                            borderRadius: '12px',
+                            padding: '0.05rem', 
+                            borderWidth: '1px', 
+                            borderColor: 'RGB(156 163 175)', 
+                            backgroundColor: 'RGB(255, 255, 255)',
+                            fontSize: "14px"
                     }),}} closeMenuOnSelect={true} isSearchable={false}  onChange={(e) => setBranch(e.value)} controlShouldRenderValue={branch ? true : false}/>
                 </div>
                 <div className="mb-6">
                     <label for="admCoordinator" class="block text-sm font-medium text-gray-900 mb-2">Admission Coordinator</label>
-                    <input type="text" value={admCoordinator} id="admCoordinator" class="bg-white border border-gray-600 text-gray-900 text-sm rounded-3xl block w-full p-2.5" placeholder="Nishad" required onChange={(e) => setAdmCoordinator(e.target.value)} />
+                    <input type="text" value={admCoordinator} id="admCoordinator" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="Nishad" required onChange={(e) => setAdmCoordinator(e.target.value)} />
                 </div> 
             </div>
 
@@ -298,8 +316,8 @@ const AddStudentsScreen = () => {
             </div>}
 
             <div className="flex justify-center md:justify-end mt-8">
-                    <button type="button" class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 font-medium rounded-3xl text-sm px-4 py-4 md:px-8 md:py-3 me-2 mb-2 lg:mr-16 transition" onClick={deleteRecordsHandler}>Delete records</button>
-                    <button type="button" class="focus:outline-none text-white bg-green-500 hover:bg-green-800 focus:ring-4 font-medium rounded-3xl text-sm px-8 py-3 me-2 mb-2 lg:mr-16" onClick={addStudentHandler}>Add student</button>
+                    <button type="button" class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 font-medium rounded-xl text-sm px-3 py-3 md:px-6 md:py-3 me-2 mb-2 lg:mr-16 transition" onClick={deleteRecordsHandler}>Delete records</button>
+                    <button type="button" class="focus:outline-none text-white bg-green-500 hover:bg-green-800 focus:ring-4 font-medium rounded-xl text-sm px-3 py-3 md:px-6 md:py-3 me-2 mb-2 lg:mr-16" onClick={addStudentHandler}>Add student</button>
             </div>
         </div>
     )
