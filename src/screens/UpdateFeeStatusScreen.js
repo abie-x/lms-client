@@ -77,7 +77,29 @@ const UpdateFeeStatusScreen = () => {
             }
         }
         getStudentData()
+            
     }, [])
+
+    useEffect(() => {
+        const changeAmount = () => {
+            if (feeType === 'registrationFees' && paymentType === 'fullPayment' && student) {
+                setAmount(student.feeDetails.registrationFees);
+            } else if (feeType === 'examFees' && paymentType === 'fullPayment' && student) {
+                setAmount(student.feeDetails.examFees);
+            } else if (feeType === 'firstTerm' && paymentType === 'fullPayment' && student) {
+                setAmount(student.feeDetails.installments[0].amount - student.feeDetails.installments[0].paidAmount);
+            } else if (feeType === 'secondTerm' && paymentType === 'fullPayment' && student) {
+                setAmount(student.feeDetails.installments[1].amount - student.feeDetails.installments[1].paidAmount);
+            } else if (feeType === 'thirdTerm' && paymentType === 'fullPayment' && student) {
+                setAmount(student.feeDetails.installments[2].amount - student.feeDetails.installments[2].paidAmount);
+            } else {
+                // Set a default value or handle the case when none of the conditions match
+                return
+            }
+        };
+
+        changeAmount()
+    }, [feeType, paymentType])
 
     
 
@@ -108,7 +130,7 @@ const UpdateFeeStatusScreen = () => {
             }
     
             const { data } = await axios.put(
-                'https://jellyfish-app-wmpnc.ondigitalocean.app/api/students/fees/nios',
+                'http://127.0.0.1:5000/api/students/fees/nios',
                 { phoneNumber: student.phoneNumber, feeType, installmentNumber, amount: parseInt(amount) },
                 config
             )
@@ -139,8 +161,8 @@ const UpdateFeeStatusScreen = () => {
     }
 
     return (
-        <div className="h-fit w-screen bg-slate-100 px-6 md:px-20 py-8 lg:py-0 lg:grid lg:grid-cols-2">
-            <div className="h-full w-full md:px-28 lg:px-4 xl:px-28 xl:mt-2 md:py-3 bg-slate-100" >
+        <div className="h-fit w-screen bg-slate-100 px-6 md:px-20 py-8 lg:py-6   lg:grid lg:grid-cols-2">
+            <div className="h-full w-full md:px-28 lg:px-4 xl:px-28 md:py-3 bg-slate-100" >
                 <h3 className="text-base md:text-xl font-semibold">Student details</h3>
                 <div className="mt-5 text-sm flex gap-4">
                     <h4 className="text-sm md:text-lg">Name: </h4>
@@ -181,7 +203,7 @@ const UpdateFeeStatusScreen = () => {
                         </div>
                         <div className="w-full me-2 mb-2">
                             <button type="button" className={`w-full ${student && student.feeDetails.installments[2].isPaid ? 'text-green-500' : 'text-red-500'} border ${student && student.feeDetails.installments[2].isPaid ? 'border-green-500' : 'border-red-500'} font-medium rounded-lg text-sm px-1 py-1`}>
-                                <div>Sec</div>
+                                <div>Third</div>
                                 <div>Term</div>
                             </button>
                             <label for="button" class={`${student && student.feeDetails.installments[2].isPaid ? 'hidden' : 'block'} text-xs font-medium text-red-600 mt-2 text-center`}>{student && student.feeDetails.installments[2].paidAmount > 0 && `${student.feeDetails.installments[2].amount - student.feeDetails.installments[2].paidAmount} bal`}</label>
@@ -221,9 +243,12 @@ const UpdateFeeStatusScreen = () => {
                             backgroundColor: 'RGB(255, 255, 255)',
                         }),}} className="border-white" closeMenuOnSelect={true} isSearchable={false} name="paymentType" onChange={(e) => setPaymentType(e.value)} controlShouldRenderValue={paymentType ? true : paymentType === false ? true : false}/>
                 </div>
+                
                 <div class="mb-3 mt-6 px-3">
                     <label for="enrollmentNumber" class="block text-sm font-medium text-gray-900 mb-2">Amount</label>
-                    <input type="text" id="enrollmentNumber" class="bg-white border border-white text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="1000" value={(feeType === 'registrationFees' && paymentType === 'fullPayment' && student) ? student.feeDetails.registrationFees : ((feeType === 'examFees' && paymentType === 'fullPayment' && student) ? student.feeDetails.examFees : amount)} onChange={(e) => setAmount(e.target.value)} required/>
+                    <input type="text" id="enrollmentNumber" class="bg-white border border-white text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="1000" 
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)} required/>
                 </div>
                 {console.log('the amount is', amount)}
                 <div className="w-full px-3 flex justify-end">
@@ -240,8 +265,8 @@ const UpdateFeeStatusScreen = () => {
                 </div>
                 {console.log('id', id)}
             </div> 
-            <div className="hidden lg:flex h-full w-full justify-center items-center">
-                <div className="w-full h-full flex justify-center">
+            <div className="hidden lg:flex h-screen w-full justify-center items-center">
+                <div className="w-full h-screen flex justify-center">
                     <Lottie animationData={animationData} className="w-5/6 h-full" />
                 </div>
             </div>

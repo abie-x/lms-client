@@ -9,6 +9,7 @@ import CheckStudentDetailsScreen from "./screens/CheckStudentDetailsScreen";
 import UpdateFeeStatusScreen from "./screens/UpdateFeeStatusScreen";
 import UpdateStudentScreen from "./screens/UpdateStudentScreen";
 import TestingScreen from "./screens/TestingScreen";
+import AdminHomeScreen from "./screens/AdminHomeScreen";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/updateFee" element={<UpdateFeeStatusScreen />} />
         <Route path="/updateStudent" element={<UpdateStudentScreen />} />
         <Route path="/test" element={<TestingScreen />} />
+        <Route path="/adminview" element={<AdminHomeScreen />} />
       </Routes>
     </Router>
   );

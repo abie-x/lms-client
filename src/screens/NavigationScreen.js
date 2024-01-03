@@ -17,6 +17,10 @@ const NavigationScreen = () => {
         navigate('/checkStudent')
     }
 
+    const navigateAdminScreen = () => {
+        navigate('/adminview')
+    }
+
     return (
         <div className="w-screen h-screen px-8 pt-12 pb-20 sm:px-16 sm:py-32">
             <div className="grid grid-cols-4">
@@ -53,7 +57,7 @@ const NavigationScreen = () => {
                         <h1 className="text-lg font-semibold text-blue-400 col-span-2 mx-auto my-auto md:block md:text-center">Modify student</h1>
                     </div>
                 </div>
-                <div class="border border-blue-400 rounded-xl p-4 mb-4 md:col-span-1 md:h-64 lg:h-80 lg:flex lg:justify-center lg:items-center cursor-pointer">
+                <div class="border border-blue-400 rounded-xl p-4 mb-4 md:col-span-1 md:h-64 lg:h-80 lg:flex lg:justify-center lg:items-center cursor-pointer" onClick={navigateAdminScreen}>
                     <div className="grid grid-cols-3 md:block">
                         <img src="./image 7.png" className="col-span-1 object-cover md:block"/>
                         <h1 className="text-lg font-semibold text-blue-400 col-span-2 mx-auto my-auto md:block md:text-center">Analytics</h1>
