@@ -5,13 +5,13 @@ import { GiTeacher } from "react-icons/gi";
 
 const AdminHomeScreen = () => {
     return (
-        <div className="h-screen w-screen px-4 py-6 md:px-12 md:py-12 grid gap-2 grid-cols-1 md:grid-cols-10">
-            <div className="w-full h-full md:col-span-8 mb-6">
-                <h3 className="font-semibold text-blue-500 text-lg">Hey Nishad👋</h3>
-                <h4 className="font-normal text-black text-sm">Welcome to your admin cockpit</h4>
-                <div className="w-full grid gap-12 md:gap-4 grid-cols-1 md:grid-cols-2 px-2 py-6 md:pt-16">
+        <div className="lg:h-screen w-screen px-4 py-6 md:px-12 md:py-12 grid gap-6 md:gap-6 grid-cols-1 md:grid-cols-10">
+            <div className="w-full h-full md:col-span-8 mb-0">
+                <h3 className="font-semibold text-blue-500 text-lg lg:text-2xl">Hey Nishad👋</h3>
+                <h4 className="font-normal text-black text-sm lg:text-base">Welcome to your admin cockpit</h4>
+                <div className="w-full grid gap-12 md:gap-4 grid-cols-1 md:grid-cols-2 px-2 py-4 pb-8 md:pt-6">
                     <div className="w-full h-40 ">
-                        <h4 className="font-semibold text-sm text-blue-500 pb-2">Revenue generated</h4>
+                        <h4 className="font-semibold text-sm lg:text-base text-blue-500 pb-2">Revenue generated</h4>
                         <div className="w-full h-full bg-gray-50 border border-gray-200 rounded-lg shadow hover:bg-gray-100 grid grid-cols-1 grid-rows-5">
                             <div className="w-full bg-white row-span-2 rounded-md flex justify-between items-center pr-2">
                                 <div className="w-12 h-12 flex justify-center items-center">
@@ -58,7 +58,7 @@ const AdminHomeScreen = () => {
                         </div>
                     </div>
                     <div className="w-full h-40 ">
-                        <h4 className="font-semibold text-sm text-blue-500 pb-2">Regestrations closed</h4>
+                        <h4 className="font-semibold text-sm lg:text-base text-blue-500 pb-2">Regestrations closed</h4>
                         <div className="w-full h-full bg-gray-50 border border-gray-200 rounded-lg shadow hover:bg-gray-100 grid grid-cols-1 grid-rows-5">
                             <div className="w-full bg-white row-span-2 rounded-md flex justify-between items-center pr-2">
                                 <div className="w-12 h-12 flex justify-center items-center">
