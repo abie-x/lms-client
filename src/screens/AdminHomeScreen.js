@@ -5,8 +5,8 @@ import { GiTeacher } from "react-icons/gi";
 
 const AdminHomeScreen = () => {
     return (
-        <div className="h-screen w-screen px-4 py-6 md:px-12 md:py-12 grid gap-4 grid-cols-1 md:grid-cols-10">
-            <div className="w-full h-full md:col-span-8 mb-12">
+        <div className="h-screen w-screen px-4 py-6 md:px-12 md:py-12 grid gap-2 grid-cols-1 md:grid-cols-10">
+            <div className="w-full h-full md:col-span-8 mb-6">
                 <h3 className="font-semibold text-blue-500 text-lg">Hey Nishad👋</h3>
                 <h4 className="font-normal text-black text-sm">Welcome to your admin cockpit</h4>
                 <div className="w-full grid gap-12 md:gap-4 grid-cols-1 md:grid-cols-2 px-2 py-6 md:pt-16">
@@ -106,7 +106,7 @@ const AdminHomeScreen = () => {
                     </div>
                 </div>
             </div>
-            <div className=" w-full bg-blue-500 rounded-lg md:col-span-2 grid md:hidden gap-2 grid-cols-2 px-4 py-4 text-blue-500">
+            <div className="w-full bg-blue-500 rounded-lg md:col-span-2 grid md:hidden gap-2 grid-cols-2 px-4 py-4 text-blue-500 mb-2">
                 <div className="bg-white rounded-lg h-12 flex justify-center items-center">
                     <p className="font-semibold text-sm flex"><MdOutlinePayment className="h-5 w-5 mr-2"/>pending fee</p>
                 </div>
