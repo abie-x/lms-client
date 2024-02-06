@@ -10,6 +10,7 @@ import UpdateFeeStatusScreen from "./screens/UpdateFeeStatusScreen";
 import UpdateStudentScreen from "./screens/UpdateStudentScreen";
 import TestingScreen from "./screens/TestingScreen";
 import AdminHomeScreen from "./screens/AdminHomeScreen";
+import AddStudentsScreenNew from "./screens/AddStudentsScreenNew";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path='/' element={<LoginScreen />} />
         <Route path="/home" element={<NavigationScreen />} />
         <Route path="/addStudents" element={<AddStudentsScreen />} />
+        <Route path="/newstudent" element={<AddStudentsScreenNew />} />
         {/* <Route path="/modifyStudents" element={<AddStudentsScreenModified /> } /> */}
         <Route path="/checkStudent" element={<CheckStudentDetailsScreen /> } />
         <Route path="/modifyStudent" element={<StudentModificationScreen />} />

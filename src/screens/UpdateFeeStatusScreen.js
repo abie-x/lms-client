@@ -66,7 +66,7 @@ const UpdateFeeStatusScreen = () => {
     //getting the student details
     useEffect(() => {
         const getStudentData = async () => {
-            const {data} = await axios.get(`https://jellyfish-app-wmpnc.ondigitalocean.app/api/students/${id}`)
+            const {data} = await axios.get(`http://127.0.0.1:5000/api/students/${id}`)
             console.log('sending data...')
             console.log(data)
             const {message, name} = data
@@ -130,7 +130,7 @@ const UpdateFeeStatusScreen = () => {
             }
     
             const { data } = await axios.put(
-                'https://jellyfish-app-wmpnc.ondigitalocean.app/api/students/fees/nios',
+                'http://127.0.0.1:5000/api/students/fees/nios',
                 { phoneNumber: student.phoneNumber, feeType, installmentNumber, amount: parseInt(amount) },
                 config
             )
@@ -161,7 +161,7 @@ const UpdateFeeStatusScreen = () => {
     }
 
     return (
-        <div className="h-fit w-screen bg-slate-100 px-6 md:px-20 py-8 lg:py-6   lg:grid lg:grid-cols-2">
+        <div className="h-fit w-screen bg-slate-100 px-6 md:px-20 py-8 lg:py-6 lg:grid lg:grid-cols-2">
             <div className="h-full w-full md:px-28 lg:px-4 xl:px-28 md:py-3 bg-slate-100" >
                 <h3 className="text-base md:text-xl font-semibold">Student details</h3>
                 <div className="mt-5 text-sm flex gap-4">
@@ -172,9 +172,15 @@ const UpdateFeeStatusScreen = () => {
                     <h4 className="text-sm md:text-lg">Batch: </h4>
                     <h4 className="text-sm md:text-lg">{student && `${student.intake} ${student.year}`}</h4>
                 </div>
-                <div className="w-full h-36 mt-6 bg-slate-200 rounded-2xl p-5">
+                <div className="w-full h-48 mt-6 bg-slate-200 rounded-2xl p-5">
                     <h3 className="text-sm font-semibold">Past payment status</h3>
-                    <div className="grid grid-cols-5 gap-2 mt-4">
+                    <div className="grid grid-cols-3 gap-2 mt-4">
+                        <div className="w-full me-2 mb-2">
+                            <button type="button" className= {`w-full ${student && student.feeDetails.admissionFeePaid ? 'text-green-500' : 'text-red-500'} border ${student && student.feeDetails.admissionFeePaid ? 'border-green-500' : 'border-red-500'} font-medium rounded-lg text-sm px-1 py-1`}>
+                                <div>Adm</div>
+                                <div>Fee</div>
+                            </button>
+                        </div>
                         <div className="w-full me-2 mb-2">
                             <button type="button" className={`w-full ${student && student.feeDetails.registrationFeePaid ? 'text-green-500' : 'text-red-500'}  border ${student && student.feeDetails.registrationFeePaid ? 'border-green-500' : 'border-red-500'} font-medium rounded-lg text-sm px-1 py-1`}>
                                 <div>Reg</div>

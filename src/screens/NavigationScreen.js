@@ -1,16 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {useLocation, useNavigate} from 'react-router-dom'
 import { MdPayment } from "react-icons/md";
+import {useSelector, useDispatch} from 'react-redux'
 
 const NavigationScreen = () => {
-    const { state } = useLocation();
-    const { name } = state || { name: '' };
+    // const { state } = useLocation();
+    // const { name } = state || { name: '' };
+
+    const [name, setName] = useState(null)
+
+    const userLogin = useSelector(state => state.userLogin)
+    const {loading, userInfo, error} = userLogin
+
+    useEffect(() => {
+        if(userInfo) {
+            setName(userInfo.name)
+        }
+        console.log(userInfo)
+    }, [userInfo, name])
 
     const navigate = useNavigate()
 
 
     const navigateAddStudentsScreen = () => {
-        navigate('/addStudents')
+        navigate('/newstudent')
     }
 
     const navigateModifyStudentsScreen = () => {
@@ -25,7 +38,7 @@ const NavigationScreen = () => {
         <div className="w-screen h-screen px-8 pt-12 pb-20 sm:px-16 sm:py-32">
             <div className="grid grid-cols-4">
                 <div className="col-span-3">
-                    <h1 className="text-blue-500 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold lg:font-semibold mb-4">Hello {name}👋</h1>
+                    <h1 className="text-blue-500 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold lg:font-semibold mb-2">Hello {name}👋</h1>
                     <h1 className="text-md md:text-lg">Choose what you wish to do</h1>
                 </div>
                 {/* <button type="button" class="w-20 h-20 border border-blue-300 text-blue-600 bg-slate-300 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full  text-sm ">

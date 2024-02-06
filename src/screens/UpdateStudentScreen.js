@@ -143,7 +143,7 @@ const UpdateStudentScreen = () => {
     useEffect(() => {
         const fetchStudentDetails = async () => {
             const { data, message } = await axios.get(
-                `https://jellyfish-app-wmpnc.ondigitalocean.app/api/students/${id}`
+                `http://127.0.0.1:5000/api/students/${id}`
             )
 
             if(data) {
@@ -203,7 +203,7 @@ const UpdateStudentScreen = () => {
             setError('passswords doesnt match')
           } else {
                 const { data } = await axios.put(
-                    `https://jellyfish-app-wmpnc.ondigitalocean.app/api/students/${id}`,
+                    `http://127.0.0.1:5000/api/students/${id}`,
                     requestBody,
                     config
                 )

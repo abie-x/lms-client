@@ -53,7 +53,7 @@ const CheckStudentDetailsScreen = () => {
             console.log('sending requests..')
 
             const { data, message } = await axios.get(
-                `https://jellyfish-app-wmpnc.ondigitalocean.app/api/students/details?phoneNumber=${phoneNumber}`,
+                `http://127.0.0.1:5000/api/students/details?phoneNumber=${phoneNumber}`,
                 config
             )
 
@@ -125,10 +125,10 @@ const CheckStudentDetailsScreen = () => {
                         <h4>Year: </h4>
                         <h4 className="ml-4">{year}</h4>
                     </div>
-                    <h4 className="mt-12 text-xs text-gray-400">If you are seeing details of another student, click edit number</h4>
-                    <div className="flex justify-center mt-8">
-                        <button type="button" class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 font-medium rounded-3xl text-sm w-32 h-8 px-4  me-2 mb-2 transition">Edit</button>
-                        <button type="button" class="focus:outline-none text-white bg-green-500 hover:bg-green-800 focus:ring-4 font-medium rounded-3xl text-sm w-32 h-8 px-4 me-2 mb-2" onClick={updateHandler}>Update</button>
+                    <h4 className="mt-12 text-xs text-gray-400">If you are seeing details of another student, edit the phone number</h4>
+                    <div className="flex justify-center mt-4">
+                        {/* <button type="button" class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 font-medium rounded-3xl text-sm w-32 h-8 px-4  me-2 mb-2 transition">Edit</button> */}
+                        <button type="button" class="focus:outline-none text-white bg-green-500 hover:bg-green-800 focus:ring-4 font-medium rounded-lg text-sm w-full h-8 px-4 me-2 mb-2" onClick={updateHandler}>Update</button>
                     </div>
                 </div>
             </div>
@@ -136,9 +136,9 @@ const CheckStudentDetailsScreen = () => {
     }
 
     return (
-        <div className="h-screen w-screen px-6 md:px-20 pt-12 grid  grid-cols-1 md:grid-cols-2">
+        <div className="h-screen w-screen bg-white px-6 md:px-20 pt-12 grid  grid-cols-1 md:grid-cols-2">
             <div className="200 pl-4">
-                <h2 className="text-lg md:text-xl lg:text-3xl font-semibold text-blue-500 mb-2">Enter Student Phone number</h2>
+                <h2 className="text-lg md:text-xl lg:text-2xl font-semibold text-blue-500 mb-2">Enter Student Phone number</h2>
                 <h4 className="text-sm md:text-md lg:text-lg font-semibold text-gray-400">& check if details are correct</h4>
                 <SearchComponent />
                 {error && <div class="p-4 text-sm text-red-800 rounded-lg bg-red-100 mt-4" role="alert">

@@ -158,7 +158,7 @@ const StudentModificationScreen = () => {
             }
     
             const { data } = await axios.put(
-                `https://jellyfish-app-wmpnc.ondigitalocean.app/api/students/updateExisting/${id}`,
+                `http://127.0.0.1:5000/api/students/updateExisting/${id}`,
                 requestBody,
                 config
             )

@@ -4,40 +4,72 @@ import { MdPassword } from 'react-icons/md';
 import axios from "axios";
 import {useNavigate} from 'react-router-dom'
 import NavigationScreen from "../screens/NavigationScreen";
+import { login } from "../actions/userActions";
+import {useSelector, useDispatch} from 'react-redux'
 
 const LoginComponent = () => {
 
     const [phoneNumber, setPhoneNumber] = useState('')
     const [password, setPassword] = useState('')
     const [isAdmin, setAdmin] = useState(false)
-    const [error, setError] = useState(null)
+    const [err, setErr] = useState(null)
+    const [errVisible, setErrVisible] = useState(true)
 
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const userLogin = useSelector(state => state.userLogin)
+    const {loading, userInfo, error} = userLogin
+
+    useEffect(() => {
+        if(userInfo) {
+            navigate('/home')
+        } else if(error) {
+            setErr(error)
+            setErrVisible(true)
+            setTimeout(() => {
+                setErr('');
+                setErrVisible(false);
+              }, 2000);
+        }
+    }, [userInfo, error])
 
     const submit = async () => {
-        const config = {
-            headers: {
-              'Content-Type': 'application/json',
-            },
+
+        if( !phoneNumber || !password) {
+            setErr('Please fill the credentials')
+            setErrVisible(true)
+            setTimeout(() => {
+                setErr('');
+                setErrVisible(false);
+            }, 2000);
+        } else {
+            dispatch(login(phoneNumber, password))
         }
 
-        console.log('sending requests..')
+        // const config = {
+        //     headers: {
+        //       'Content-Type': 'application/json',
+        //     },
+        // }
 
-        // navigate(`/home`, { state: { name: 'Zack' } })
+        // console.log('sending requests..')
 
-        const { data } = await axios.post(
-            'https://jellyfish-app-wmpnc.ondigitalocean.app/api/teachers/login',
-            { phoneNumber, password },
-            config
-        )
+        // // navigate(`/home`, { state: { name: 'Zack' } })
 
-        const {message, name} = data
+        // const { data } = await axios.post(
+        //     'http://127.0.0.1:5000/api/teachers/login',
+        //     { phoneNumber, password },
+        //     config
+        // )
 
-        if(name) {
-            navigate(`/home`, { state: { name: name } })
-        } else if(message) {
-            setError(message)
-        }
+        // const {message, name} = data
+
+        // if(name) {
+        //     navigate(`/home`, { state: { name: name } })
+        // } else if(message) {
+        //     setError(message)
+        // }
 
         // console.log('sent request..')
         // console.log('data received', data)
@@ -46,7 +78,7 @@ const LoginComponent = () => {
 
     return ( 
         <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-10 xl:grid-cols-11 h-full overflow-y-hidden">
-            <div className="w-full bg-slate-200 rounded-xl md:col-span-1 lg:col-span-4 xl:col-span-3 sm:pb-4 sm:px-2">
+            <div className="w-full bg-slate-100 rounded-xl md:col-span-1 lg:col-span-4 xl:col-span-3 sm:pb-4 sm:px-2">
                 <div className="flex justify-center">
                     <img src="./linfield-logo.png" className="max-[520px]:w-3/12  max-[520px]:h-3/12 max-[640px]:w-2/12  max-[640px]:h-2/12 sm:w-2/12 sm:h-2/12 md:w-3/12 md:h-3/12 rounded-md pt-3 md:pt-6"/>
                 </div>
@@ -82,7 +114,7 @@ const LoginComponent = () => {
                             <label for="remember" class="ml-2 mt-1 text-sm font-medium text-gray-500">Keep me signed in</label>
                         </div>
                         <button type="button" onClick={submit} class=" text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br font-medium rounded-lg text-sm px-5 py-2 text-center mr-2 mb-4 mt-4">Login</button>
-                        {error && <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100" role="alert">
+                        {err && errVisible && <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100" role="alert">
                             <span class="font-medium"></span> {error}
                         </div>}
                         <h5 className="text-sm pb-4 md:pb-8">Login as Admin? <span className="text-blue-400 cursor-pointer" onClick={() => setAdmin(true)}>click here</span></h5>
@@ -91,9 +123,9 @@ const LoginComponent = () => {
                 </div>
             </div>
             <div className="max-[640px]:hidden w-full h-full rounded-lg md:col-span-1 lg:col-span-6 xl:col-span-8 md:flex md:justify-center md:align-middle">
-                <div className="w-full h-full flex justify-center md:-mb-20  ">
+                <div className="w-full h-full flex justify-center">
                     <img src="login-img.png" className="rounded-md md:w-full lg:w-3/5 h-full object-cover" />
-                </div>
+                </div> 
             </div>
         </div>
     )
