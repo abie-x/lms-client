@@ -66,7 +66,7 @@ const UpdateFeeStatusScreen = () => {
     //getting the student details
     useEffect(() => {
         const getStudentData = async () => {
-            const {data} = await axios.get(`http://127.0.0.1:5000/api/students/${id}`)
+            const {data} = await axios.get(`https://lobster-app-yjjm5.ondigitalocean.app/api/students/${id}`)
             console.log('sending data...')
             console.log(data)
             const {message, name} = data
@@ -130,7 +130,7 @@ const UpdateFeeStatusScreen = () => {
             }
     
             const { data } = await axios.put(
-                'http://127.0.0.1:5000/api/students/fees/nios',
+                'https://lobster-app-yjjm5.ondigitalocean.app/api/students/fees/nios',
                 { phoneNumber: student.phoneNumber, feeType, installmentNumber, amount: parseInt(amount) },
                 config
             )

@@ -53,7 +53,7 @@ const CheckStudentDetailsScreen = () => {
             console.log('sending requests..')
 
             const { data, message } = await axios.get(
-                `http://127.0.0.1:5000/api/students/details?phoneNumber=${phoneNumber}`,
+                `https://lobster-app-yjjm5.ondigitalocean.app/api/students/details?phoneNumber=${phoneNumber}`,
                 config
             )
 

@@ -143,7 +143,7 @@ const UpdateStudentScreen = () => {
     useEffect(() => {
         const fetchStudentDetails = async () => {
             const { data, message } = await axios.get(
-                `http://127.0.0.1:5000/api/students/${id}`
+                `https://lobster-app-yjjm5.ondigitalocean.app/api/students/${id}`
             )
 
             if(data) {
@@ -203,7 +203,7 @@ const UpdateStudentScreen = () => {
             setError('passswords doesnt match')
           } else {
                 const { data } = await axios.put(
-                    `http://127.0.0.1:5000/api/students/${id}`,
+                    `https://lobster-app-yjjm5.ondigitalocean.app/api/students/${id}`,
                     requestBody,
                     config
                 )

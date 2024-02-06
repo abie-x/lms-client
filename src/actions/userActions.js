@@ -16,7 +16,7 @@ export const login = (phoneNumber, password) => async (dispatch) => {
       }
   
       const { data } = await axios.post(
-        'http://127.0.0.1:5000/api/teachers/login',
+        'https://lobster-app-yjjm5.ondigitalocean.app/api/teachers/login',
         { phoneNumber, password },
         config
       )

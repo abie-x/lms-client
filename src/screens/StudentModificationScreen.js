@@ -158,7 +158,7 @@ const StudentModificationScreen = () => {
             }
     
             const { data } = await axios.put(
-                `http://127.0.0.1:5000/api/students/updateExisting/${id}`,
+                `https://lobster-app-yjjm5.ondigitalocean.app/api/students/updateExisting/${id}`,
                 requestBody,
                 config
             )
