@@ -27,11 +27,13 @@ const NavigationScreen = () => {
     }
 
     const navigateModifyStudentsScreen = () => {
-        navigate('/checkStudent')
+        // navigate('/checkStudent')
+        console.log('navigating')
     }
 
     const navigateAdminScreen = () => {
-        navigate('/adminview')
+        // navigate('/adminview')
+        console.log('navigating')
     }
 
     return (
