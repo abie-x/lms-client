@@ -27,6 +27,7 @@ const AddStudentsScreenNew = () => {
     const [admCoordinator, setAdmCoordinator] = useState('')
     const [admYear, setAdmYear] = useState(null)
     const [successMessage, setSuccessMessage] = useState(null)
+    const [admissionFee, setAdmissionFee] = useState(null)
 
     const changeBatch = (e) => {
         setBatch(e.value)
@@ -138,8 +139,8 @@ const AddStudentsScreenNew = () => {
         console.log('sending requests..')
 
         const { data } = await axios.post(
-            'https://lobster-app-yjjm5.ondigitalocean.app/api/students/nios',
-            { name, place, year: admYear, course, batch, intake, mode, phoneNumber: phoneNum, parentNumber: parentNum, dob, email, branch, admissionCoordinator: admCoordinator },
+            'http://127.0.0.1:5000/api/students/nios',
+            { name, place, year: admYear, course, batch, intake, mode, phoneNumber: phoneNum, parentNumber: parentNum, dob, email, branch, admissionCoordinator: admCoordinator, admissionFee },
             config
         )
 
@@ -285,6 +286,14 @@ const AddStudentsScreenNew = () => {
                     <input type="text" id="admissioncoordinator" class="bg-white border border-white text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="admin" 
                     value={admCoordinator}
                     onChange={(e) => setAdmCoordinator(e.target.value)} required/>
+                </div>
+
+                
+                <div class="mb-3 mt-6 px-3">
+                    <label for="admFee" class="block text-sm font-medium text-gray-900 mb-2">Admission Fee</label>
+                    <input type="text" id="enrollmentNumber" class="bg-white border border-white text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="1000" 
+                    value={admissionFee}
+                    onChange={(e) => setAdmissionFee(e.target.value)} required/>
                 </div>
 
                 {error && <div class="p-4 mb-3 mt-6 text-sm text-red-800 rounded-lg bg-red-100 w-full" role="alert">

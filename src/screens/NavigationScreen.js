@@ -32,8 +32,8 @@ const NavigationScreen = () => {
     }
 
     const navigateAdminScreen = () => {
-        // navigate('/adminview')
-        console.log('navigating')
+        navigate('/adminview')
+        // console.log('navigating')
     }
 
     return (
