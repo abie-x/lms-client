@@ -34,7 +34,6 @@ const CheckStudentDetailsScreen = () => {
         const [phoneNumber, setPhoneNumber] = useState('')
 
         const changeSearchQuery = (e) => {
-            console.log(e.target.value)
             setPhoneNumber(e.target.value)
         }
 
@@ -50,8 +49,6 @@ const CheckStudentDetailsScreen = () => {
                 },
             }
 
-            console.log('sending requests..')
-
             const { data, message } = await axios.get(
                 `https://lobster-app-yjjm5.ondigitalocean.app/api/students/details?phoneNumber=${phoneNumber}`,
                 config
@@ -65,7 +62,7 @@ const CheckStudentDetailsScreen = () => {
                 setStudentId(data._id)
                 setSubjects(data.subjects)
             }
-    
+            
         }
 
         return ( 
@@ -99,7 +96,7 @@ const CheckStudentDetailsScreen = () => {
                 if(subjects.length > 0) {
                     navigate(`/modifyStudent`, { state: { id:  studentId} })
                 } else {
-                    navigate(`/updateStudent`, { state: { id:  studentId} })
+                    navigate(`/modifystudent`, { state: { id:  studentId} })
                 }
             }
             
@@ -145,6 +142,7 @@ const CheckStudentDetailsScreen = () => {
                             <span class="font-medium"></span> {error}
                 </div>}
                 <CardComponent />
+                {console.log(`printing the subjects ${subjects}`)}
             </div>
             <div className=" max-[640px]:hidden mt-24 lg:-mt-0 md:w-full lg:w-5/6">
                 <img src="./phone_img.png" />
