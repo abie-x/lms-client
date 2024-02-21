@@ -142,7 +142,7 @@ export const CheckStudentDetailsScreenNew = () => {
         };
 
         return (
-            <div class="max-w-sm p-6 bg-slate-100 rounded-lg shadow mt-12">
+            <div class="max-w-sm p-6 bg-slate-100 rounded-lg shadow">
                 <div className="grid grid-cols-1 border border-gray-800 px-6 py-6 rounded-md">
                     <div className="flex justify-start text-sm mb-3">
                         <h4>Name: </h4>
