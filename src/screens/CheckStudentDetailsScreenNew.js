@@ -179,7 +179,7 @@ export const CheckStudentDetailsScreenNew = () => {
 
     return (
         <div className="h-screen  flex justify-center items-center">
-            <div className="w-full flex flex-col justify-center items-center mt-24 ">
+            <div className="w-full flex flex-col justify-center items-center">
                 <h1 className="text-2xl font-bold text-blue-700">Hey you!</h1>
                 <h1 className="text-2xl font-bold text-blue-700 ">Lets do some edit</h1>
                 <SearchComponent />
