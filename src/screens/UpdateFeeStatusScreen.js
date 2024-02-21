@@ -19,8 +19,10 @@ const UpdateFeeStatusScreen = () => {
     const [amount, setAmount] = useState(null)
     const [error, setError] = useState(null)
     const [successMessage, setSuccessMessage] = useState(null)
+    const [feeName,setFeeName]= useState(null)
 
     const [student, setStudent] = useState(null)
+
 
     const feeOptions = [
         {
@@ -42,6 +44,10 @@ const UpdateFeeStatusScreen = () => {
         {
             label: 'Third term fee',
             value: 'thirdTerm'
+        },
+        {
+            label: 'Custom',
+            value: 'custom'
         }
     ]
 
@@ -115,6 +121,7 @@ const UpdateFeeStatusScreen = () => {
             }
     
             console.log('sending requests..')
+            console.log(paymentType);
     
             let installmentNumber
             console.log(paymentType)
@@ -153,6 +160,8 @@ const UpdateFeeStatusScreen = () => {
             }
         }
 
+    
+        
         
 
         // if(data.name) {
@@ -227,7 +236,19 @@ const UpdateFeeStatusScreen = () => {
                             backgroundColor: 'RGB(255, 255, 255)',
                         }),}} className="border-white" closeMenuOnSelect={true} isSearchable={false}  onChange={(e) => setFeeType(e.value)} name="feeType" controlShouldRenderValue={feeType ? true : feeType === false ? true : false}/>
                 </div>
-                <div class={`mb-3 mt-6 px-3 ${feeType === 'registrationFees' || feeType === 'examFees' || feeType=== null ? 'hidden' : 'block'}`}>
+
+                {
+                    feeType === 'custom' && <div class="mb-3 mt-6 px-3">
+                    <label for="enrollmentNumber" class="block text-sm font-medium text-gray-900 mb-2">Fee Name</label>
+                    <input type="text" id="enrollmentNumber" class="bg-white border border-white text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Enter the fee name" onChange={(e)=>setFeeName(e.target.value)} required/>
+
+
+                </div>
+                }
+                {console.log(`fee name : ${feeName}`)}
+
+
+                <div class={`mb-3 mt-6 px-3 ${feeType === 'registrationFees' || feeType === 'examFees' || feeType === 'custom' ||feeType=== null ? 'hidden' : 'block'}`}>
                         <label for="paymentType" class="block text-sm font-medium text-gray-900 mb-2">Select fee type</label>
                         <Select options={paymentOptions} styles={{
                             control: (baseStyles, state) => ({
@@ -238,6 +259,7 @@ const UpdateFeeStatusScreen = () => {
                             backgroundColor: 'RGB(255, 255, 255)',
                         }),}} className="border-white" closeMenuOnSelect={true} isSearchable={false}  onChange={(e) => setPaymentType(e.value)} name="paymentType" controlShouldRenderValue={paymentType ? true : paymentType === false ? true : false}/>
                 </div>
+                
                 <div class={`mb-3 mt-6 px-3 ${feeType === 'registrationFees' || feeType === 'examFees' || feeType=== null ? 'block' : 'hidden'}`}>
                         <label for="paymentType" class="block text-sm font-medium text-gray-900 mb-2">Select fee type</label>
                         <Select options={paymentOptionsUpdated} styles={{
@@ -248,7 +270,13 @@ const UpdateFeeStatusScreen = () => {
                             borderWidth: '0px', 
                             backgroundColor: 'RGB(255, 255, 255)',
                         }),}} className="border-white" closeMenuOnSelect={true} isSearchable={false} name="paymentType" onChange={(e) => setPaymentType(e.value)} controlShouldRenderValue={paymentType ? true : paymentType === false ? true : false}/>
+
+                        
                 </div>
+
+                
+                
+                
                 
                 <div class="mb-3 mt-6 px-3">
                     <label for="enrollmentNumber" class="block text-sm font-medium text-gray-900 mb-2">Amount</label>
@@ -276,6 +304,7 @@ const UpdateFeeStatusScreen = () => {
                     <Lottie animationData={animationData} className="w-5/6 h-full" />
                 </div>
             </div>
+            {console.log(`printing the feeType: ${feeType}`)}
         </div>
     )
 }
