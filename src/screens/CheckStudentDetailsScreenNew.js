@@ -86,7 +86,7 @@ export const CheckStudentDetailsScreenNew = () => {
         };
 
         return (
-            <div className="w-3/4 lg:w-[30%] lg:mt-8 mt-6">
+            <div className="w-3/4 lg:w-[30%] lg:mt-8">
                 <div class="flex justify-center items-center  ">
                     <div class="relative w-full   ">
                         <input
@@ -142,7 +142,7 @@ export const CheckStudentDetailsScreenNew = () => {
         };
 
         return (
-            <div class="max-w-sm p-6 bg-slate-100 rounded-lg shadow">
+            <div class="max-w-sm p-6 bg-slate-100 rounded-lg shadow mt-4">
                 <div className="grid grid-cols-1 border border-gray-800 px-6 py-6 rounded-md">
                     <div className="flex justify-start text-sm mb-3">
                         <h4>Name: </h4>
@@ -178,7 +178,7 @@ export const CheckStudentDetailsScreenNew = () => {
     }, [messageTimer]);
 
     return (
-        <div className="h-screen  flex justify-center items-center">
+        <div className="h-screen  flex justify-center items-center bg-green-500">
             <div className="w-full flex flex-col justify-center items-center">
                 <h1 className="text-2xl font-bold text-blue-700">Hey you!</h1>
                 <h1 className="text-2xl font-bold text-blue-700 ">Lets do some edit</h1>
