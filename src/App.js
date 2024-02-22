@@ -23,7 +23,9 @@ function App() {
         <Route path="/newstudent" element={<AddStudentsScreenNew />} />
         {/* <Route path="/modifyStudents" element={<AddStudentsScreenModified /> } /> */}
         <Route path="/checkStudent" element={<CheckStudentDetailsScreenNew /> } />
-        <Route path="/modifyStudent" element={<StudentModificationScreen />} />
+        {/* <Route path="/modifyStudent" element={<StudentModificationScreen />} /> */}
+        <Route path="/modifyStudent" element={<UpdateStudentScreen />} />
+        
         <Route path="/updateFee" element={<UpdateFeeStatusScreen />} />
         <Route path="/updateStudent" element={<UpdateStudentScreen />} />
         <Route path="/test" element={<TestingScreen />} />
