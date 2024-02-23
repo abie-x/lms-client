@@ -318,14 +318,15 @@ const UpdateFeeStatusScreen = () => {
                     <h4 className="text-sm md:text-lg">{student && `${student.course} `}</h4>
 
                 </div>
-                <div className="w-full h-48 mt-6 bg-slate-200 rounded-2xl p-5">
+                <div className="w-full  mt-6 bg-slate-200 rounded-2xl p-6 mb-6">
                     <h3 className="text-sm font-semibold">Past payment status</h3>
-                    <div className="grid grid-cols-3 gap-2 mt-4">
+                    <div className="grid grid-cols-3 gap-2 mt-4 mb-4">
                         <div className="w-full me-2 mb-2">
                             <button type="button" className= {`w-full ${student && student.feeDetails.admissionFeePaid ? 'text-green-500' : 'text-red-500'} border ${student && student.feeDetails.admissionFeePaid ? 'border-green-500' : 'border-red-500'} font-medium rounded-lg text-sm px-1 py-1`}>
                                 <div>Adm</div>
                                 <div>Fee</div>
                             </button>
+                            <label for="button" class={`${student && student.feeDetails.admissionFeePaid ? 'hidden' : 'block'} text-xs font-medium text-red-600 mt-2 text-center`}>{student && student.feeDetails.admissionFeePaidAmount > 0 && `${student.feeDetails.admissionFees - student.feeDetails.admissionFeePaidAmount} bal`}</label>
                         </div>
                         <div className="w-full me-2 mb-2">
                             <button type="button" className={`w-full ${student && student.feeDetails.registrationFeePaid ? 'text-green-500' : 'text-red-500'}  border ${student && student.feeDetails.registrationFeePaid ? 'border-green-500' : 'border-red-500'} font-medium rounded-lg text-sm px-1 py-1`}>
