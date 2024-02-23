@@ -230,7 +230,7 @@ const UpdateStudentScreen = () => {
                 <div className="lg:block   lg:w-full hidden">
                     <img className=" w-.4 lg:absolute bottom-0" src="https://exeducation.kiev.ua/wp-content/uploads/2022/11/photo_svg-slider1-img1.svg" alt="" />
                 </div>
-                <div className="flex flex-col h-fit lg:col-span-2 lg:mx-24 md:mx-[20%]  ">
+                <div className="flex flex-col h-fit lg:col-span-2 lg:mx-24 md:mx-[20%] sm:mx[30%]  ">
                     <h3 className="text-xl lg:text-2xl text-blue-500 font-semibold mt-2 mb-4 md:mt-8 md:mb-12">Add student data from below</h3>
 
                     <div className="lg:flex lg:flex-row lg:gap-x-14 ">
@@ -423,7 +423,7 @@ const UpdateStudentScreen = () => {
                             }),
                         }} closeMenuOnSelect={false} components={animatedComponents} isMulti onChange={(e) => valuesOnlyArrayTocSubjects(e)} onBlur={() => console.log('Blur')} onFocus={() => console.log('Focus')} />
                     </div>
-                    <div className="flex justify-center md:justify-end mt-5">
+                    <div className="flex justify-center md:justify-end mt-5 sm:mb-[10%]">
                         <button type="button" class="focus:outline-none text-white bg-green-500 hover:bg-green-800 focus:ring-4 font-medium rounded-xl text-sm w-40 h-10 px-4 me-2 mb-2" onClick={updateStudentHandler}>Add student</button>
                     </div>
 

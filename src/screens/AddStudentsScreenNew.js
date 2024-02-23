@@ -139,7 +139,7 @@ const AddStudentsScreenNew = () => {
         console.log('sending requests..')
 
         const { data } = await axios.post(
-            'http://127.0.0.1:5000/api/students/nios',
+            'https://lobster-app-yjjm5.ondigitalocean.app/api/students/nios',
             { name, place, year: admYear, course, batch, intake, mode, phoneNumber: phoneNum, parentNumber: parentNum, dob, email, branch, admissionCoordinator: admCoordinator, admissionFee },
             config
         )
@@ -147,6 +147,7 @@ const AddStudentsScreenNew = () => {
         if(data.name) {
             setLoading(false)
             setSuccessMessage('Student added successfully')
+            console.log(data);
             setTimeout(() => {
                 navigate('/home');
             }, 1000);

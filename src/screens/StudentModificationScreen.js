@@ -218,9 +218,20 @@ const StudentModificationScreen = () => {
     
 
     return (
-        <div className=" h-screen w-screen md:grid md:grid-cols-6 gap-4">
-            
-            <div className="col-span-2 py-4 px-8">
+        <div className=" flex flex-col justify-center items-center h-screen  w-screen lg:grid lg:grid-cols-3 md:grid md:grid-cols-2 ">
+
+
+            <div className="hidden md:block ">
+                <div className="lg:w-[70%] w-full h-full flex justify-center lg:bg-blue-100 md:bg-blue-100 md:w-[60%]">
+                    {/* <Lottie animationData={animationData} className="w-3/6 h-full" /> */}
+                    <div className="lg:block md:block  md:h-screen  lg:w-3/4 hidden ">
+                        <img className="  md:mt-48  lg:w-[35%]  md:w-[50%] md:bottom-0 md:left-0 lg:absolute lg:bottom-0 md:absolute" src="https://exeducation.kiev.ua/wp-content/uploads/2022/11/photo_svg-slider1-img1.svg" alt="" />
+                    </div>
+                </div>
+            </div>
+
+
+            <div className="  py-4 px-8 lg:col-span-2 lg:mx-[20%] lg:mt-[5%] md:flex md:justify-center  md:flex-col ">
                 <h3 className="text-lg md:text-xl lg:text-2xl text-blue-500 font-semibold mt-2 mb-4 md:mt-8 md:mb-12">Modify required details from below</h3>
 
                 <div className="h-fit">
@@ -308,17 +319,13 @@ const StudentModificationScreen = () => {
                 {error && <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100" role="alert">
                                 <span class="font-medium"></span> {error}
                     </div>}
-                <div className="flex justify-center md:justify-end mt-8">
+                <div className="flex justify-center md:justify-end mt-8 md:gap-5 gap-5">
                         <button type="button" class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 font-medium rounded-xl text-sm px-4 py-4 md:px-8 md:py-3 me-2 mb-2 xl:mr-16 transition" onClick={deleteRecordsHandler}>Delete records</button>
                         <button type="button" class="focus:outline-none text-white bg-green-500 hover:bg-green-800 focus:ring-4 font-medium rounded-xl text-sm px-8 py-3 me-2 mb-2 xl:mr-16" onClick={updateStudentHandler}>Update</button>
                 </div>
             </div>
 
-            <div className="hidden md:block bg-blue-200 col-span-4">
-                <div className="w-full h-full flex justify-center">
-                    <Lottie animationData={animationData} className="w-3/6 h-full" />
-                </div>
-            </div>
+            
 
             {console.log(`the current selected stream is: ${stream}`)}
         </div>
