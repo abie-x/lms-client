@@ -12,7 +12,6 @@ const AddStudentsScreenNew = () => {
     const [loading, setLoading] = useState(false)
 
     const [error, setError] = useState(null)
-    const [errVisible, setErrVisible] = useState(true)
 
     const [name, setName] = useState('')
     const [place, setPlace] = useState('')
@@ -24,7 +23,6 @@ const AddStudentsScreenNew = () => {
     const [parentNum, setParentNum] = useState('')
     const [dob, setDob] = useState('')
     const [email, setEmail] = useState('')
-    const [confirmEmail, setConfirmEmail] = useState('')
     const [branch, setBranch] = useState(null)
     const [admCoordinator, setAdmCoordinator] = useState('')
     const [admYear, setAdmYear] = useState(null)
@@ -129,7 +127,6 @@ const AddStudentsScreenNew = () => {
 
     const addStudentHandler = async () => {
 
-
         setLoading(true)
         setSuccessMessage('Hold on, Processing your request')
         
@@ -151,48 +148,19 @@ const AddStudentsScreenNew = () => {
             setLoading(false)
             setSuccessMessage('Student added successfully')
             console.log(data);
-          
-        if(email !== confirmEmail) {
-            setError(`Emails doesn't match`)
-            setErrVisible(true)
             setTimeout(() => {
-                setError('');
-                setErrVisible(false);
-              }, 1000);
-        } else {
-            setLoading(true)
-            setSuccessMessage('Hold on, Processing your request')
-            
-            const config = {
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-            }
-    
-            console.log('sending requests..')
-    
-            const { data } = await axios.post(
-                'http://127.0.0.1:5000/api/students/nios',
-                { name, place, year: admYear, course, batch, intake, mode, phoneNumber: phoneNum, parentNumber: parentNum, dob, email, branch, admissionCoordinator: admCoordinator, admissionFee },
-                config
-            )
-    
-            if(data.name) {
-                setLoading(false)
-                setSuccessMessage('Student added successfully')
-                setTimeout(() => {
-                    navigate('/home');
-                }, 1000);
-            }
-     
-            const {message} = data
-            message && setError(message)
-            message && setSuccessMessage(null)
-    
-            const timeoutId = setTimeout(() => {
-                setError(null);
-            }, 2000);
+                navigate('/home');
+            }, 1000);
         }
+ 
+        const {message} = data
+        message && setError(message)
+        message && setSuccessMessage(null)
+
+        const timeoutId = setTimeout(() => {
+            setError(null);
+        }, 2000);
+
     }
 
 
@@ -303,13 +271,6 @@ const AddStudentsScreenNew = () => {
                 </div>
 
                 <div class="mb-3 mt-3 px-3">
-                    <label for="email" class="block text-sm font-medium text-gray-900 mb-2">Confirm Email</label>
-                    <input type="text" id="email" class="bg-white border border-white text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="admin@linfield.in" 
-                    value={confirmEmail}
-                    onChange={(e) => setConfirmEmail(e.target.value)} required/>
-                </div>
-
-                <div class="mb-3 mt-3 px-3">
                     <label for="branch" class="block text-sm font-medium text-gray-900 mb-2">Branch</label>
                     <Select options={branchOptions} styles={{
                         control: (baseStyles, state) => ({
@@ -336,7 +297,7 @@ const AddStudentsScreenNew = () => {
                     onChange={(e) => setAdmissionFee(e.target.value)} required/>
                 </div>
 
-                { error && errVisible && <div class="p-4 mb-3 mt-6 text-sm text-red-800 rounded-lg bg-red-100 w-full" role="alert">
+                {error && <div class="p-4 mb-3 mt-6 text-sm text-red-800 rounded-lg bg-red-100 w-full" role="alert">
                     <span class="font-medium"></span> {error}
                 </div>}
 
