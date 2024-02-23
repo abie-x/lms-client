@@ -104,6 +104,7 @@ const AddStudentsScreen = () => {
     const [parentNum, setParentNum] = useState('')
     const [dob, setDob] = useState('')
     const [email, setEmail] = useState('')
+    const [confirmEmail, setConfirmEmail] = useState('')
     const [branch, setBranch] = useState(null)
     const [admCoordinator, setAdmCoordinator] = useState('')
     const [admYear, setAdmYear] = useState(null)
@@ -124,6 +125,10 @@ const AddStudentsScreen = () => {
     }
 
     const addStudentHandler = async () => {
+
+        if(email !== confirmEmail) {
+            console.log('Both emails are not equal')
+        }
 
         setLoading(true)
         setSuccessMessage('Hold on, Processing your request')
@@ -288,6 +293,10 @@ const AddStudentsScreen = () => {
                 <div class="mb-3">
                     <label for="email" class="block text-sm font-medium text-gray-900 mb-2">Email</label>
                     <input type="text" value={email} id="email" role="presentation" autoComplete="off" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="admin@linfield.com" required onChange={(e) => setEmail(e.target.value)} />
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="block text-sm font-medium text-gray-900 mb-2">Confirm Email</label>
+                    <input type="text" value={confirmEmail} id="email" role="presentation" autoComplete="off" class="bg-white border border-gray-400 text-gray-600 text-sm rounded-xl block w-full p-2" placeholder="admin@linfield.com" required onChange={(e) => setConfirmEmail(e.target.value)} />
                 </div>
                 <div class="mb-3">
                     <label for="branch" class="block text-sm font-medium text-gray-900 mb-2">Branch</label>
