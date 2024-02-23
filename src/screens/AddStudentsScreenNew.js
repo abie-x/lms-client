@@ -129,6 +129,29 @@ const AddStudentsScreenNew = () => {
 
     const addStudentHandler = async () => {
 
+
+        setLoading(true)
+        setSuccessMessage('Hold on, Processing your request')
+        
+        const config = {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+        }
+
+        console.log('sending requests..')
+
+        const { data } = await axios.post(
+            'https://lobster-app-yjjm5.ondigitalocean.app/api/students/nios',
+            { name, place, year: admYear, course, batch, intake, mode, phoneNumber: phoneNum, parentNumber: parentNum, dob, email, branch, admissionCoordinator: admCoordinator, admissionFee },
+            config
+        )
+
+        if(data.name) {
+            setLoading(false)
+            setSuccessMessage('Student added successfully')
+            console.log(data);
+          
         if(email !== confirmEmail) {
             setError(`Emails doesn't match`)
             setErrVisible(true)

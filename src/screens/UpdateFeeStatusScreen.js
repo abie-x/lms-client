@@ -20,11 +20,16 @@ const UpdateFeeStatusScreen = () => {
     const [error, setError] = useState(null)
     const [successMessage, setSuccessMessage] = useState(null)
     const [feeName,setFeeName]= useState(null)
+    const [errVisible,setErrVisible] = useState(true)
 
     const [student, setStudent] = useState(null)
 
 
     const feeOptions = [
+        {
+            label: 'Admission fee',
+            value: 'admissionFees'
+        },
         {
             label: 'Registration fee',
             value: 'registrationFees'
@@ -81,10 +86,12 @@ const UpdateFeeStatusScreen = () => {
             } else if(message) {
                 setError(message)
             }
+
         }
         getStudentData()
             
     }, [])
+    console.log(student);
 
     useEffect(() => {
         const changeAmount = () => {
@@ -107,13 +114,101 @@ const UpdateFeeStatusScreen = () => {
         changeAmount()
     }, [feeType, paymentType])
 
+    useEffect(() => {
+        if (feeType === 'examFees'  && (!student || !student.feeDetails || !student.feeDetails.examFees)) {
+            setError('Error : Exam fee not added');
+            setErrVisible(true)
+            setTimeout(() => {
+                setErrVisible(false)
+            },  3000);  
+        }
+        else if(feeType === 'registrationFees' && (!student || !student.feeDetails || !student.feeDetails.registrationFees)){
+            setError('Error : Registration fee not added');
+            setErrVisible(true)
+            setTimeout(() => {
+                setErrVisible(false)
+            },  3000); 
+        }
+        else{
+            setError(null); 
+        }
+    }, [feeType, student]);
+
     
+
+    // const updateFeeHandler = async () => {
+
+    //     if(!feeType || !paymentType || !amount) {
+    //         setError('Please fill all required fields')
+    //     } else {
+    //         const config = {
+    //             headers: {
+    //               'Content-Type': 'application/json',
+    //             },
+    //         }
+    
+    //         console.log('sending requests..')
+    //         console.log(paymentType);
+    
+    //         let installmentNumber
+    //         console.log(paymentType)
+    //         // paymentType === 'firstTerm' ? installmentNumber = 1 : paymentType === 'secondTerm' ? installmentNumber = 2 : paymentType === 'thirdTerm' ? installmentNumber = 3 : installmentNumber = 0
+    //         if(feeType === 'firstTerm') {
+    //             installmentNumber = 1
+    //         } else if(feeType === 'secondTerm') {
+    //             installmentNumber = 2
+    //         } else if(feeType === 'thirdTerm') {
+    //             installmentNumber = 3
+    //         } else {
+    //             installmentNumber = 4
+    //         }
+    
+    //         const { data } = await axios.put(
+    //             'https://lobster-app-yjjm5.ondigitalocean.app/api/students/fees/nios',
+    //             { phoneNumber: student.phoneNumber, feeType, installmentNumber, amount: parseInt(amount), },
+    //             config
+    //         )
+    
+    //         const {message} = data
+    
+    //         if(data.status === 'success') {
+    //             setSuccessMessage('Fees added successfully')
+    //             setTimeout(() => {
+    //                 navigate('/home');
+    //               }, 1000);
+    //         } else if(message) {
+    //             setError(message)
+
+                
+
+    //         }
+    //     }
+
+    //     const changeFeeAmount = () => {
+    //         if(feeType === 'registrationFees' && paymentType === 'fullPayment') {
+
+    //         }
+    //     }
+
+    
+        
+        
+
+    //     // if(data.name) {
+    //     //     navigate('/home')
+    //     // }
+    // }
 
     const updateFeeHandler = async () => {
 
-        if(!feeType || !paymentType || !amount) {
-            setError('Please fill all required fields')
-        } else {
+        if(feeType === 'custom') {
+
+            console.log(student.phoneNumber)
+            console.log(feeType)
+            console.log(amount)
+
+            // { phoneNumber: student.phoneNumber, feeType, installmentNumber, amount: parseInt(amount) },
+
             const config = {
                 headers: {
                   'Content-Type': 'application/json',
@@ -138,7 +233,7 @@ const UpdateFeeStatusScreen = () => {
     
             const { data } = await axios.put(
                 'https://lobster-app-yjjm5.ondigitalocean.app/api/students/fees/nios',
-                { phoneNumber: student.phoneNumber, feeType, installmentNumber, amount: parseInt(amount) },
+                { phoneNumber: student.phoneNumber, feeName, amount: parseInt(amount) },
                 config
             )
     
@@ -152,26 +247,62 @@ const UpdateFeeStatusScreen = () => {
             } else if(message) {
                 setError(message)
             }
-        }
-
-        const changeFeeAmount = () => {
-            if(feeType === 'registrationFees' && paymentType === 'fullPayment') {
-
+            
+        } else {
+            if(!feeType || !paymentType || !amount) {
+                setError('Please fill all required fields')
+            } else {
+                const config = {
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                }
+        
+                console.log('sending requests..')
+                console.log(paymentType);
+        
+                let installmentNumber
+                console.log(paymentType)
+                // paymentType === 'firstTerm' ? installmentNumber = 1 : paymentType === 'secondTerm' ? installmentNumber = 2 : paymentType === 'thirdTerm' ? installmentNumber = 3 : installmentNumber = 0
+                if(feeType === 'firstTerm') {
+                    installmentNumber = 1
+                } else if(feeType === 'secondTerm') {
+                    installmentNumber = 2
+                } else if(feeType === 'thirdTerm') {
+                    installmentNumber = 3
+                } else {
+                    installmentNumber = 4
+                }
+        
+                const { data } = await axios.put(
+                    'https://lobster-app-yjjm5.ondigitalocean.app/api/students/fees/nios',
+                    { phoneNumber: student.phoneNumber, feeType, installmentNumber, amount: parseInt(amount) },
+                    config
+                )
+        
+                const {message} = data
+        
+                if(data.status === 'success') {
+                    setSuccessMessage('Fees added successfully')
+                    setTimeout(() => {
+                        navigate('/home');
+                      }, 1000);
+                } else if(message) {
+                    setError(message)
+                }
             }
-        }
-
     
-        
-        
-
-        // if(data.name) {
-        //     navigate('/home')
-        // }
+            const changeFeeAmount = () => {
+                if(feeType === 'registrationFees' && paymentType === 'fullPayment') {
+    
+                }
+            }
+        }
     }
 
     return (
-        <div className="h-fit w-screen bg-slate-100 px-6 md:px-20 py-8 lg:py-6 lg:grid lg:grid-cols-2">
-            <div className="h-full w-full md:px-28 lg:px-4 xl:px-28 md:py-3 bg-slate-100" >
+        <div className="h-screen w-screen bg-slate-100 px-6 md:px-20 py-8 lg:py-6 lg:grid lg:grid-cols-2 lg:overflow-y-hidden">
+            <div className="h-full w-full md:px-28 lg:px-4 xl:px-28 md:py-3 bg-slate-100 " >
                 <h3 className="text-base md:text-xl font-semibold">Student details</h3>
                 <div className="mt-5 text-sm flex gap-4">
                     <h4 className="text-sm md:text-lg">Name: </h4>
@@ -180,15 +311,22 @@ const UpdateFeeStatusScreen = () => {
                 <div className="mt-2 text-sm flex gap-4">
                     <h4 className="text-sm md:text-lg">Batch: </h4>
                     <h4 className="text-sm md:text-lg">{student && `${student.intake} ${student.year}`}</h4>
+
                 </div>
-                <div className="w-full h-48 mt-6 bg-slate-200 rounded-2xl p-5">
+                <div className="mt-2 text-sm flex gap-4">
+                    <h4 className="text-sm md:text-lg">Course: </h4>
+                    <h4 className="text-sm md:text-lg">{student && `${student.course} `}</h4>
+
+                </div>
+                <div className="w-full  mt-6 bg-slate-200 rounded-2xl p-6 mb-6">
                     <h3 className="text-sm font-semibold">Past payment status</h3>
-                    <div className="grid grid-cols-3 gap-2 mt-4">
+                    <div className="grid grid-cols-3 gap-2 mt-4 mb-4">
                         <div className="w-full me-2 mb-2">
                             <button type="button" className= {`w-full ${student && student.feeDetails.admissionFeePaid ? 'text-green-500' : 'text-red-500'} border ${student && student.feeDetails.admissionFeePaid ? 'border-green-500' : 'border-red-500'} font-medium rounded-lg text-sm px-1 py-1`}>
                                 <div>Adm</div>
                                 <div>Fee</div>
                             </button>
+                            <label for="button" class={`${student && student.feeDetails.admissionFeePaid ? 'hidden' : 'block'} text-xs font-medium text-red-600 mt-2 text-center`}>{student && student.feeDetails.admissionFeePaidAmount > 0 && `${student.feeDetails.admissionFees - student.feeDetails.admissionFeePaidAmount} bal`}</label>
                         </div>
                         <div className="w-full me-2 mb-2">
                             <button type="button" className={`w-full ${student && student.feeDetails.registrationFeePaid ? 'text-green-500' : 'text-red-500'}  border ${student && student.feeDetails.registrationFeePaid ? 'border-green-500' : 'border-red-500'} font-medium rounded-lg text-sm px-1 py-1`}>
@@ -288,18 +426,44 @@ const UpdateFeeStatusScreen = () => {
                 <div className="w-full px-3 flex justify-end">
                     <label className="text-xs md:text-sm font-medium text-gray-900 mb-2">Total fee: {student && student.feeDetails.totalAmount} <span className="ml-5 text-red-500">Pending fee: {student && student.feeDetails.totalAmount - student.feeDetails.paidAmount}</span></label>
                 </div>
-                {error && <div class="p-4 mb-4 mt-2 text-sm text-red-800 rounded-lg bg-red-100" role="alert">
+                {error && errVisible && <div class="p-4 mb-4 mt-2 text-sm text-red-800 rounded-lg bg-red-100" role="alert">
                             <span class="font-medium"></span> {error}
                 </div>}
                 {successMessage && <div class="p-4 mb-4 mt-2 text-sm text-green-800 rounded-lg bg-green-100" role="alert">
                             <span class="font-medium"></span> {successMessage}
                 </div>}
+                
+                {/* if student.feeDetails.examFees field does not exist just do conditional rendering with an error emmeage like add examfee to pay */}
+
+                {/* {
+                   feeType === 'examFees' &&  (!student || !student.feeDetails || !student.feeDetails.examFees) ? setError('Error : Registration fee not added.') (
+                
+                        {error}
+                    ) : null
+                }
+                {
+                   feeType === 'registrationFees' &&  (!student || !student.feeDetails || !student.feeDetails.registrationFees) ? setError(true) (
+                    
+                        
+                    ) : null
+                } */}
+
+                
+
+
                 <div className="w-full flex justify-end mt-2 mb-1">
-                    <button type="button" class="focus:outline-none text-white bg-green-500 hover:bg-red-800 focus:ring-4 font-medium rounded-md text-sm px-2 py-2 md:px-5 md:py-2.5 transition" onClick={updateFeeHandler}>Update fee</button>
+                <button
+                    type="button"
+                    className={`font-medium rounded-md text-sm px-2 py-2 md:px-5 md:py-2.5 transition ${error ? 'bg-green-300 text-white cursor-not-allowed' : 'bg-green-500 text-white'}`}
+                    onClick={updateFeeHandler}
+                    disabled={!!error && errVisible}
+                >
+                    Update fee
+                </button>
                 </div>
                 {console.log('id', id)}
             </div> 
-            <div className="hidden lg:flex h-screen w-full justify-center items-center">
+            <div className="hidden lg:flex h-screen w-full justify-center items-center bg-slate-100">
                 <div className="w-full h-screen flex justify-center">
                     <Lottie animationData={animationData} className="w-5/6 h-full" />
                 </div>

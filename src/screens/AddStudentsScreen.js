@@ -109,6 +109,7 @@ const AddStudentsScreen = () => {
     const [admCoordinator, setAdmCoordinator] = useState('')
     const [admYear, setAdmYear] = useState(null)
     const [successMessage, setSuccessMessage] = useState(null)
+    const [admissionFee, setAdmissionFee] = useState(null)
 
     const changeIntake = (e) => {
         setIntake(e.value)
@@ -142,7 +143,7 @@ const AddStudentsScreen = () => {
 
         const { data } = await axios.post(
             'https://lobster-app-yjjm5.ondigitalocean.app/api/students/nios',
-            { name, place, year: admYear, course, batch, intake, mode, phoneNumber: phoneNum, parentNumber: parentNum, dob, email, branch, admissionCoordinator: admCoordinator },
+            { name, place, year: admYear, course, batch, intake, mode, phoneNumber: phoneNum, parentNumber: parentNum, dob, email, branch, admissionCoordinator: admCoordinator, },
             config
         )
 
