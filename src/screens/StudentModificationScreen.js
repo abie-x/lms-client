@@ -218,20 +218,20 @@ const StudentModificationScreen = () => {
     
 
     return (
-        <div className=" flex flex-col justify-center items-center h-screen  w-screen lg:grid lg:grid-cols-3 md:grid md:grid-cols-2 ">
+        <div className="  w-screen lg:grid lg:grid-cols-3 md:grid md:grid-cols-2 ">
 
 
             <div className="hidden md:block ">
-                <div className="lg:w-[70%] w-full h-full flex justify-center lg:bg-blue-100 md:bg-blue-100 md:w-[60%]">
+                <div className="lg:w-[70%] w-full h-full flex justify-center lg:h-full   lg:bg-blue-100 md:bg-blue-100 md:w-[60%]">
                     {/* <Lottie animationData={animationData} className="w-3/6 h-full" /> */}
-                    <div className="lg:block md:block  md:h-screen  lg:w-3/4 hidden ">
-                        <img className="  md:mt-48  lg:w-[35%]  md:w-[50%] md:bottom-0 md:left-0 lg:absolute lg:bottom-0 md:absolute" src="https://exeducation.kiev.ua/wp-content/uploads/2022/11/photo_svg-slider1-img1.svg" alt="" />
+                    <div className="lg:block md:block  md:h-screen  lg:w-3/4 hidden  ">
+                        <img className="  md:mt-48  lg:w-[35%]  md:w-[50%] md:bottom-0 md:left-0  md:absolute lg:fixed " src="https://exeducation.kiev.ua/wp-content/uploads/2022/11/photo_svg-slider1-img1.svg" alt="" />
                     </div>
                 </div>
             </div>
 
 
-            <div className="  py-4 px-8 lg:col-span-2 lg:mx-[20%] lg:mt-[5%] md:flex md:justify-center  md:flex-col ">
+            <div className=" h-screen py-4 px-8 lg:col-span-2 lg:mx-[20%] lg:mt-[5%] md:flex md:flex-col md:justify-center  bg-red-200">
                 <h3 className="text-lg md:text-xl lg:text-2xl text-blue-500 font-semibold mt-2 mb-4 md:mt-8 md:mb-12">Modify required details from below</h3>
 
                 <div className="h-fit">
