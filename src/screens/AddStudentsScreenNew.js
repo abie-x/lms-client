@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Select from 'react-select';
 import axios from "axios";
 import Lottie from "lottie-react";
@@ -12,6 +12,7 @@ const AddStudentsScreenNew = () => {
     const [loading, setLoading] = useState(false)
 
     const [error, setError] = useState(null)
+    const [showError, setShowError] = useState(false);
 
     const [name, setName] = useState('')
     const [place, setPlace] = useState('')
@@ -28,6 +29,7 @@ const AddStudentsScreenNew = () => {
     const [admYear, setAdmYear] = useState(null)
     const [successMessage, setSuccessMessage] = useState(null)
     const [admissionFee, setAdmissionFee] = useState(null)
+    const [confirmMail,setConfirmMail] = useState(null)
 
     const changeBatch = (e) => {
         setBatch(e.value)
@@ -125,43 +127,71 @@ const AddStudentsScreenNew = () => {
         }
     ]
 
-    const addStudentHandler = async () => {
+    useEffect(() => {
+        if(email === confirmMail) {
+            setShowError(false)
+        }
+    })
 
-        setLoading(true)
-        setSuccessMessage('Hold on, Processing your request')
+    const addStudentHandler = async () => {
+        setError(null); // Clear any previous error messages
+        setLoading(true);
+        setShowError(false);
+
+        if (email !== confirmMail) {
+            setError('Email and confirm email do not match');
+            setShowError(true);
+            setTimeout(() => {
+                setError(null);
+            },  2000); // Set timeout to  3 seconds
+            setLoading(false);
+            return; // Prevent form submission
+        }
+
+        setSuccessMessage('Hold on, Processing your request');
+    
+        // Check if email and confirm email match
         
+    
         const config = {
             headers: {
-              'Content-Type': 'application/json',
+                'Content-Type': 'application/json',
             },
+        };
+    
+        console.log('sending requests..');
+    
+        try {
+            const { data } = await axios.post(
+                'https://lobster-app-yjjm5.ondigitalocean.app/api/students/nios',
+                { name, place, year: admYear, course, batch, intake, mode, phoneNumber: phoneNum, parentNumber: parentNum, dob, email, branch, admissionCoordinator: admCoordinator, admissionFee },
+                config
+            );
+    
+            if (data.name) {
+                setLoading(false);
+                setSuccessMessage('Student added successfully');
+                console.log(data);
+                setTimeout(() => {
+                    navigate('/home');
+                },  1000);
+            }
+    
+            const { message } = data;
+            if (message) {
+                setError(message);
+                setSuccessMessage(null);
+            }
+        } catch (error) {
+            setError('An error occurred while adding the student.');
+            setLoading(false);
         }
-
-        console.log('sending requests..')
-
-        const { data } = await axios.post(
-            'https://lobster-app-yjjm5.ondigitalocean.app/api/students/nios',
-            { name, place, year: admYear, course, batch, intake, mode, phoneNumber: phoneNum, parentNumber: parentNum, dob, email, branch, admissionCoordinator: admCoordinator, admissionFee },
-            config
-        )
-
-        if(data.name) {
-            setLoading(false)
-            setSuccessMessage('Student added successfully')
-            console.log(data);
-            setTimeout(() => {
-                navigate('/home');
-            }, 1000);
-        }
- 
-        const {message} = data
-        message && setError(message)
-        message && setSuccessMessage(null)
-
-        const timeoutId = setTimeout(() => {
+    
+        // Clear the error message after a delay
+        setTimeout(() => {
             setError(null);
-        }, 2000);
-
-    }
+        },  2000);
+    };
 
 
     return (
@@ -265,9 +295,15 @@ const AddStudentsScreenNew = () => {
 
                 <div class="mb-3 mt-3 px-3">
                     <label for="email" class="block text-sm font-medium text-gray-900 mb-2">Email</label>
-                    <input type="text" id="email" class="bg-white border border-white text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="admin@linfield.in" 
+                    <input type="text" id="email" class={`bg-white border ${error  || showError ? 'border-red-500' : 'border-white'} text-gray-900 text-sm rounded-lg block w-full p-2.5`} placeholder="admin@linfield.in"  
                     value={email}
                     onChange={(e) => setEmail(e.target.value)} required/>
+                </div>
+                <div class="mb-3 mt-3 px-3">
+                    <label for="confirmEmail" class="block text-sm font-medium text-gray-900 mb-2">Confirm email</label>
+                    <input type="text" id="email" class={`bg-white border ${error || showError ? 'border-red-500' : 'border-white'} text-gray-900 text-sm rounded-lg block w-full p-2.5`} placeholder="admin@linfield.in"  
+                    value={confirmMail}
+                    onChange={(e) => setConfirmMail(e.target.value)} required/>
                 </div>
 
                 <div class="mb-3 mt-3 px-3">

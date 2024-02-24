@@ -301,7 +301,7 @@ const UpdateFeeStatusScreen = () => {
     }
 
     return (
-        <div className="h-screen w-screen bg-slate-100 px-6 md:px-20 py-8 lg:py-6 lg:grid lg:grid-cols-2 lg:overflow-y-hidden">
+        <div className="h-screen w-screen bg-slate-100 px-6 md:px-20 py-8 lg:py-6 lg:grid lg:grid-cols-2 lg:h-screen ">
             <div className="h-full w-full md:px-28 lg:px-4 xl:px-28 md:py-3 bg-slate-100 " >
                 <h3 className="text-base md:text-xl font-semibold">Student details</h3>
                 <div className="mt-5 text-sm flex gap-4">
@@ -318,7 +318,7 @@ const UpdateFeeStatusScreen = () => {
                     <h4 className="text-sm md:text-lg">{student && `${student.course} `}</h4>
 
                 </div>
-                <div className="w-full  mt-6 bg-slate-200 rounded-2xl p-6 mb-6">
+                <div className="w-full  mt-6 bg-slate-200 rounded-2xl p-5 pb-1 ">
                     <h3 className="text-sm font-semibold">Past payment status</h3>
                     <div className="grid grid-cols-3 gap-2 mt-4 mb-4">
                         <div className="w-full me-2 mb-2">
