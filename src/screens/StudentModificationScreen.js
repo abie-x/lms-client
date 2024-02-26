@@ -192,7 +192,7 @@ const StudentModificationScreen = () => {
         }
 
         return (  
-            <div className="mt-4 mb-6">
+            <div className=" mb-6">
                 <label class="block text-sm font-medium text-gray-900 mb-2 ">Choose your stream</label>
                 <div class="flex justify-between mt-2">
                     <div class="flex items-center me-4">
@@ -218,7 +218,7 @@ const StudentModificationScreen = () => {
     
 
     return (
-        <div className="  w-screen lg:grid lg:grid-cols-3 md:grid md:grid-cols-2 ">
+        <div className="  w-screen lg:grid lg:grid-cols-3 md:grid md:grid-cols-2 sm:w-full  ">
 
 
             <div className="hidden md:block ">
@@ -231,8 +231,8 @@ const StudentModificationScreen = () => {
             </div>
 
 
-            <div className=" h-screen py-4 px-8 lg:col-span-2 lg:mx-[20%] lg:mt-[5%] md:flex md:flex-col md:justify-center  bg-red-200">
-                <h3 className="text-lg md:text-xl lg:text-2xl text-blue-500 font-semibold mt-2 mb-4 md:mt-8 md:mb-12">Modify required details from below</h3>
+            <div className=" h-screen py-3 px-8  flex lg:col-span-2 lg:mx-[20%] flex-col justify-center">
+                <h3 className="text-lg md:text-xl lg:text-2xl text-blue-500 font-semibold   md:mt-4 md:mb-6">Modify required details from below</h3>
 
                 <div className="h-fit">
                     <RadioComponent />
@@ -319,7 +319,7 @@ const StudentModificationScreen = () => {
                 {error && <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100" role="alert">
                                 <span class="font-medium"></span> {error}
                     </div>}
-                <div className="flex justify-center md:justify-end mt-8 md:gap-5 gap-5">
+                <div className="flex justify-center md:justify-end mt-4 md:gap-5 gap-5">
                         {/* <button type="button" class="focus:outline-none text-white bg-red-500 hover:bg-red-800 focus:ring-4 font-medium rounded-xl text-sm px-4 py-4 md:px-8 md:py-3 me-2 mb-2 xl:mr-16 transition" onClick={deleteRecordsHandler}>Delete records</button> */}
                         <button type="button" class="focus:outline-none text-white bg-green-500 hover:bg-green-800 focus:ring-4 font-medium rounded-xl text-sm px-8 py-3 me-2 mb-2 xl:mr-16" onClick={updateStudentHandler}>Update</button>
                 </div>

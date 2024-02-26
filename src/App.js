@@ -27,7 +27,7 @@ function App() {
         {/* <Route path="/modifyStudent" element={<UpdateStudentScreen />} /> */}
         
         <Route path="/updateFee" element={<UpdateFeeStatusScreen />} />
-        <Route path="/updateStudent" element={<UpdateStudentScreen />} />
+        <Route path="/updateStudent" element={<UpdateStudentScreen  />} />
         <Route path="/test" element={<TestingScreen />} />
         <Route path="/adminview" element={<AdminHomeScreen />} />
       </Routes>
