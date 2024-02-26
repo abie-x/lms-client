@@ -9,7 +9,7 @@ const animatedComponents = makeAnimated();
 const UpdateStudentScreen = () => {
 
     const { state } = useLocation();
-    const { id } = state
+    const { id } = "65d9a622da6be66b5b296a6e"
 
     const navigate = useNavigate()
 
